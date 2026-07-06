@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="scroll-smooth" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Artha | Pelajar SMK & Web Developer</title>
@@ -41,8 +41,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
 
-    
     <style>
+        /* Sembunyikan scrollbar untuk pengalaman UI yang lebih bersih (seperti aplikasi) */
+        ::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        html {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
         /* Transition Curtain */
         .transition-curtain {
             position: fixed;
@@ -115,6 +123,15 @@
 }
 @keyframes slideInNavbar {
     to { transform: translateY(0); opacity: 1; }
+}
+
+.navbar-logo-transition {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), letter-spacing 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: left center;
+}
+.navbar-logo-scrolled {
+    transform: scale(0.85);
+    letter-spacing: -0.05em;
 }
 
 .intro-hero-circle {
@@ -282,6 +299,181 @@
 
 .font-label-md { font-size: 1.05rem; letter-spacing: -0.01em; }
 
+/* ── Scroll Progress Bar ── */
+#scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00668a, #4285F4, #34A853);
+    z-index: 99998;
+    width: 0%;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
+/* ── Particle Canvas ── */
+#particle-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+/* ── Magnetic Button Wrapper ── */
+.magnetic-wrap {
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
+}
+
+/* ── Ripple Effect ── */
+.ripple-effect {
+    position: fixed;
+    border-radius: 50%;
+    background: rgba(0,102,138,0.08);
+    transform: scale(0);
+    animation: rippleAnim 0.8s ease-out forwards;
+    pointer-events: none;
+    z-index: 99999;
+}
+@keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+}
+
+/* ── Reveal Clip (Image Reveal) ── */
+.reveal-clip {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.reveal-clip.is-revealed {
+    clip-path: inset(0 0 0 0);
+}
+
+/* ── Split Text Reveal ── */
+.split-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px) rotateX(30deg);
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.split-char.is-visible {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+}
+
+/* ── Mouse Glow ── */
+#mouse-glow {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99997;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,102,138,0.07) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    will-change: left, top;
+}
+
+/* ── Scramble chars ── */
+.scramble-char {
+    color: #00668a;
+}
+
+/* ── Parallax Layers ── */
+.parallax-layer {
+    position: absolute;
+    pointer-events: none;
+    will-change: transform;
+    border-radius: 50%;
+}
+
+/* ── Custom Cursor ── */
+.cursor-ring {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,102,138,0.2);
+    background: transparent;
+    transform: translate(-50%, -50%) scale(1);
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                border-color 0.4s ease,
+                background 0.4s ease,
+                box-shadow 0.4s ease;
+    will-change: transform, left, top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    mix-blend-mode: normal;
+}
+.cursor-ring.is-hover {
+    width: 96px;
+    height: 96px;
+    border-color: rgba(0,102,138,0.15);
+    border-width: 1px;
+    background: #ffffff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08),
+                0 2px 8px rgba(0,0,0,0.04),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.cursor-ring.is-hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.cursor-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    opacity: 0;
+    transform: translateY(12px) scale(0.6);
+    transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform, opacity;
+}
+.cursor-ring.is-hover .cursor-label {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.cursor-icon {
+    font-size: 22px !important;
+    color: #00668a;
+    font-variation-settings: 'FILL' 0, 'wght' 300;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+.cursor-ring.is-hover .cursor-icon {
+    transform: scale(1.1);
+}
+.cursor-text {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #1a1a2e;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* Hide default cursor on interactive elements */
+body:not(.cursor-disabled) a,
+body:not(.cursor-disabled) button,
+body:not(.cursor-disabled) input,
+body:not(.cursor-disabled) textarea,
+body:not(.cursor-disabled) [onclick],
+body:not(.cursor-disabled) .curated-card,
+body:not(.cursor-disabled) .project-card {
+    cursor: none;
+}
+
 @media (max-width: 767px) {
     .hero-title { font-size: clamp(48px, 15vw, 72px); }
     .projects-section { padding: 50px 0 80px; }
@@ -329,8 +521,12 @@
 
 <!-- Custom Cursor Elements -->
 
-<div class="cursor-dot"></div>
-<div class="cursor-outline"></div>
+<div class="cursor-ring">
+    <span class="cursor-label">
+        <span class="cursor-icon material-symbols-outlined">touch_app</span>
+        <span class="cursor-text">Buka</span>
+    </span>
+</div>
 
 <!-- Navigation Shell -->
 <!-- Full-width container for the blur effect -->
@@ -338,7 +534,7 @@
     <!-- Centered and styled navbar -->
     <nav class="max-w-[1280px] mx-auto bg-surface-container-lowest/80 text-on-background border border-outline-variant/30 flex justify-between items-center px-6 py-3 rounded-2xl shadow-lg shadow-primary/5">
 
-    <a class="font-headline-md text-2xl md:text-3xl font-bold text-on-background hover:text-secondary transition-colors duration-200" href="#">
+    <a id="navbar-logo" class="navbar-logo-transition font-headline-md text-2xl md:text-3xl font-bold text-on-background hover:text-secondary transition-colors duration-200" href="#">
         Artha
     </a>
 
@@ -387,24 +583,66 @@ document.querySelectorAll('.jump-text').forEach(text => {
 });
 
 // Klik handler dengan staggered animation
+// Function to handle smooth scrolling to an element
+window.smoothScrollTo = function(targetId, duration = 500) {
+    if (targetId === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+    }
+    
+    const targetElement = document.querySelector(targetId);
+    if (!targetElement) return;
+
+    let topOffset = 0;
+    let el = targetElement;
+    while(el && el !== document.body) {
+        topOffset += el.offsetTop;
+        el = el.offsetParent;
+    }
+
+    const startY = window.scrollY;
+    const distance = topOffset - startY;
+    const startTime = performance.now();
+
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+    if (window._navScrollRaf) cancelAnimationFrame(window._navScrollRaf);
+
+    function animateScroll(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        window.scrollTo(0, startY + distance * easeOutCubic(progress));
+        if (progress < 1) {
+            window._navScrollRaf = requestAnimationFrame(animateScroll);
+        }
+    }
+    window._navScrollRaf = requestAnimationFrame(animateScroll);
+};
+
+// Global delegated click handler for all anchor links
+document.body.addEventListener('click', function(e) {
+    const link = e.target.closest('a[href^="#"]');
+    if (link) {
+        // Only prevent default if it's an internal link we want to animate
+        const targetId = link.getAttribute('href');
+        
+        // Don't intercept if it's just a fallback link with no id
+        if (targetId === '#' && link.id !== 'navbar-logo') return;
+        
+        e.preventDefault();
+        
+        // Determine duration based on distance/target
+        const isNearSection = targetId === '#home' || targetId === '#about';
+        const duration = isNearSection ? 500 : 700;
+        
+        window.smoothScrollTo(targetId, duration);
+    }
+});
+
+// Staggered animation specific for nav-links
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function(e) {
-        e.preventDefault(); // Mencegah default jump
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            let topOffset = 0;
-            let el = targetElement;
-            while(el && el !== document.body) {
-                topOffset += el.offsetTop;
-                el = el.offsetParent;
-            }
-            window.scrollTo({
-                top: topOffset,
-                behavior: 'smooth'
-            });
-        }
-        
+        // Scroll is already handled by the global handler above
         // Reset semua link
         document.querySelectorAll('.nav-link').forEach(l => {
             l.classList.remove('active');
@@ -780,6 +1018,36 @@ texts.forEach(text => {
         const heroTitleWrapper = container.querySelector('.hero-title-wrapper');
         const heroTitleGlow = container.querySelector('.hero-title-glow');
 
+        // --- Navbar Logo Scroll Animation ---
+        const navbarLogo = document.getElementById('navbar-logo');
+        if (navbarLogo) {
+            ScrollTrigger.create({
+                trigger: document.body,
+                start: 'top -50',
+                end: 99999,
+                onEnter: () => navbarLogo.classList.add('navbar-logo-scrolled'),
+                onLeaveBack: () => navbarLogo.classList.remove('navbar-logo-scrolled')
+            });
+        }
+
+        // --- Project Cards Scroll Animation ---
+        const projectCards = container.querySelectorAll('.project-card');
+        if (projectCards.length > 0) {
+            gsap.from(projectCards, {
+                scrollTrigger: {
+                    trigger: '#projects',
+                    start: 'top 75%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 50,
+                opacity: 0,
+                scale: 0.95,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'power3.out'
+            });
+        }
+
         if (titleChars.length > 0) {
             // Staggered intro animation for title characters
             titleChars.forEach((char, index) => {
@@ -848,78 +1116,135 @@ texts.forEach(text => {
 
 
 
-        // Custom Cursor Logic with Particle Trail
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
+        // ── Smart Interactive Cursor ──
+        // Disable on touch devices
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.body.classList.add('cursor-disabled');
+            document.querySelector('.cursor-ring').remove();
+        } else {
+        const cursorRing = document.querySelector('.cursor-ring');
+        const cursorLabel = cursorRing.querySelector('.cursor-label');
+        const cursorIcon = cursorRing.querySelector('.cursor-icon');
+        const cursorText = cursorRing.querySelector('.cursor-text');
 
-        // Mouse and cursor position variables
-        window.mouseX = 0;
-        window.mouseY = 0;
-        let outlineX = 0;
-        let outlineY = 0;
-        let outlineVX = 0;
-        let outlineVY = 0;
-        const spring = 0.04; // How 'springy' the outline is. Lower value = more delay.
-        const friction = 0.8; // Damping factor. Higher value = smoother, less abrupt stop.
-
+        window.mouseX = -100;
+        window.mouseY = -100;
+        let ringX = -100, ringY = -100;
+        let ringVX = 0, ringVY = 0;
+        const spring = 0.035;
+        const friction = 0.82;
         let cursorVisible = false;
+        let currentHoverEl = null;
+
+        // Label map: element selectors → { icon, text }
+        const labelMap = [
+            // Order matters: most specific first
+            { test: (el) => !!el.closest('.curated-card') || !!el.closest('.project-card'), icon: 'visibility', text: 'Lihat' },
+            { test: (el) => !!el.closest('[data-tilt]'), icon: '360', text: 'Eksplor' },
+            { test: (el) => {
+                const a = el.closest('a');
+                return a && a.getAttribute('href')?.startsWith('#');
+            }, icon: 'arrow_downward', text: 'Scroll' },
+            { test: (el) => !!el.closest('a'), icon: 'open_in_new', text: 'Buka' },
+            { test: (el) => !!el.closest('button') || el.closest('[onclick]'), icon: 'touch_app', text: 'Klik' },
+            { test: (el) => el.matches('input') || el.matches('textarea'), icon: 'edit', text: 'Tulis' },
+            { test: (el) => !!el.closest('img') || !!el.closest('[class*="card"]'), icon: 'zoom_in', text: 'Lihat' },
+        ];
+
+        function getLabelFor(el) {
+            for (const entry of labelMap) {
+                if (entry.test(el)) return entry;
+            }
+            return null;
+        }
+
+        let leaveTimer = null;
+
+        function getLogicalTarget(el) {
+            // Walk up to find the closest interactive parent
+            const interactiveSelectors = 'a, button, [onclick], input, textarea, [class*="card"], [data-tilt], img';
+            const closest = el.closest(interactiveSelectors);
+            return closest || el;
+        }
 
         window.addEventListener('mousemove', (e) => {
             window.mouseX = e.clientX;
             window.mouseY = e.clientY;
 
-            // Show cursors on first move
             if (!cursorVisible) {
-                cursorDot.style.opacity = '1';
-                cursorOutline.style.opacity = '1';
-                outlineX = window.mouseX;
-                outlineY = window.mouseY;
+                cursorRing.classList.remove('is-hidden');
+                ringX = window.mouseX;
+                ringY = window.mouseY;
                 cursorVisible = true;
             }
 
-            // Dot follows mouse instantly (offset by half its size = 4px)
-            cursorDot.style.left = (window.mouseX - 4) + 'px';
-            cursorDot.style.top  = (window.mouseY - 4) + 'px';
-        });
-
-        // Hide cursor when mouse leaves window
-        window.addEventListener('mouseleave', () => {
-            cursorDot.style.opacity = '0';
-            cursorOutline.style.opacity = '0';
-            cursorVisible = false;
-        });
-
-        window.addEventListener('mouseenter', () => {
-            if (cursorVisible) {
-                cursorDot.style.opacity = '1';
-                cursorOutline.style.opacity = '1';
+            // Use logical parent to avoid flicker on nested spans
+            const logicalEl = getLogicalTarget(e.target);
+            const label = getLabelFor(logicalEl);
+            if (label) {
+                if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+                if (currentHoverEl !== logicalEl) {
+                    currentHoverEl = logicalEl;
+                    cursorIcon.textContent = label.icon;
+                    cursorText.textContent = label.text;
+                    // Re-trigger label entrance animation
+                    cursorLabel.style.transition = 'none';
+                    cursorLabel.style.opacity = '0';
+                    cursorLabel.style.transform = 'scale(0.3) translateY(8px)';
+                    void cursorLabel.offsetWidth;
+                    cursorLabel.style.transition = '';
+                    requestAnimationFrame(() => {
+                        cursorLabel.style.opacity = '1';
+                        cursorLabel.style.transform = 'scale(1) translateY(0)';
+                    });
+                }
+                cursorRing.classList.add('is-hover');
+            } else {
+                if (currentHoverEl) {
+                    currentHoverEl = null;
+                    cursorRing.classList.remove('is-hover');
+                    // Clear inline styles so CSS default takes over with transition
+                    cursorLabel.style.opacity = '';
+                    cursorLabel.style.transform = '';
+                    // Clear text after exit transition completes
+                    leaveTimer = setTimeout(() => {
+                        cursorIcon.textContent = 'touch_app';
+                        cursorText.textContent = 'Buka';
+                        leaveTimer = null;
+                    }, 500);
+                }
             }
         });
 
-        function animateCursor() {
-            // Spring physics for the outline
-            const dx = window.mouseX - outlineX;
-            const dy = window.mouseY - outlineY;
-            outlineVX += dx * spring;
-            outlineVY += dy * spring;
-            outlineVX *= friction;
-            outlineVY *= friction;
-            outlineX += outlineVX;
-            outlineY += outlineVY;
-
-            // Outline follows with spring (offset by half its size = 15px)
-            cursorOutline.style.left = (outlineX - 15) + 'px';
-            cursorOutline.style.top  = (outlineY - 15) + 'px';
-
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Hover effects
-        container.querySelectorAll('a, button, input, textarea, [onclick]').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        window.addEventListener('mouseleave', () => {
+            if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+            cursorRing.classList.add('is-hidden');
+            cursorRing.classList.remove('is-hover');
+            cursorLabel.style.opacity = '';
+            cursorLabel.style.transform = '';
+            cursorVisible = false;
+            currentHoverEl = null;
         });
+
+        window.addEventListener('mouseenter', () => {
+            if (cursorVisible) cursorRing.classList.remove('is-hidden');
+        });
+
+        function animateCursorRing() {
+            const dx = window.mouseX - ringX;
+            const dy = window.mouseY - ringY;
+            ringVX += dx * spring;
+            ringVY += dy * spring;
+            ringVX *= friction;
+            ringVY *= friction;
+            ringX += ringVX;
+            ringY += ringVY;
+            cursorRing.style.left = ringX + 'px';
+            cursorRing.style.top = ringY + 'px';
+            requestAnimationFrame(animateCursorRing);
+        }
+        animateCursorRing();
+        }
 
         // --- Interactive Dot Background ---
         window.addEventListener('mousemove', e => {
@@ -943,20 +1268,6 @@ texts.forEach(text => {
             gsap.from(container.querySelector("#interstitial-content"), {
                 opacity: 0, y: 50, ease: "power2.out", duration: 1,
                 scrollTrigger: { trigger: interstitialShape, start: "top 70%", toggleActions: "play none none reverse" }
-            });
-        }
-
-        // *** SCROLL RESTORATION: If returning from a project page, scroll to #projects ***
-        // This runs AFTER all ScrollTrigger setup so nothing can reset it
-        if (window._returnToProjects) {
-            window._returnToProjects = false;
-            requestAnimationFrame(() => {
-                const projectsSection = (container === document ? document : container).querySelector('#projects');
-                if (projectsSection) {
-                    const top = projectsSection.getBoundingClientRect().top + window.scrollY;
-                    window.scrollTo({ top: top, behavior: 'instant' });
-                    document.documentElement.scrollTop = top;
-                }
             });
         }
         };
@@ -1011,48 +1322,34 @@ texts.forEach(text => {
                 sync: false,
                 transitions: [{
                     name: 'universal-transition',
+
+                    // ── LEAVE ────────────────────────────────────────────────
                     async leave(data) {
                         var done = this.async();
                         window.barbaTransitioning = true;
 
-                        // Save current scroll position before leaving
+                        // Save scroll position of current page
                         if (data.current.url.path) {
                             sessionStorage.setItem('scroll_' + data.current.url.path, window.scrollY);
                         }
 
-                        // Pre-calculate where we need to scroll BEFORE the curtain even rises
-                        if (data.next.namespace === 'home') {
-                            if (data.current.namespace === 'project-detail' || data.current.namespace === 'projects') {
-                                // Flag for initHomeScripts to scroll to #projects after its setup
-                                window._returnToProjects = true;
-                                window._pendingScrollToProjects = false;
-                                window._wasGoingToProjects = false;
-                                window._pendingScrollY = 0;
-                            } else {
-                                window._returnToProjects = false;
-                                window._pendingScrollToProjects = false;
-                                window._wasGoingToProjects = false;
-                                window._pendingScrollY = parseInt(sessionStorage.getItem('scroll_' + data.next.url.path)) || 0;
-                            }
-                        } else {
-                            window._returnToProjects = false;
-                            window._pendingScrollToProjects = false;
-                            window._wasGoingToProjects = false;
-                            window._pendingScrollY = 0;
-                        }
-                        
+                        // Set flag: are we returning to home from a project page?
+                        window._returnToProjects = (
+                            data.next.namespace === 'home' &&
+                            (data.current.namespace === 'project-detail' || data.current.namespace === 'projects')
+                        );
+
                         if (typeof ScrollTrigger !== 'undefined') {
                             ScrollTrigger.getAll().forEach(t => t.kill());
                         }
-                        
+
                         var curtain = document.querySelector('.transition-curtain');
                         var logo = curtain.querySelector('.curtain-logo');
-                        
+
                         var tl = gsap.timeline({ onComplete: () => {
                             if (data.current.container) {
                                 gsap.set(data.current.container, { opacity: 0, display: 'none' });
                             }
-                            // Hide navbar instantly before enter if going to project-detail
                             if (data.next.namespace === 'project-detail') {
                                 gsap.set('#global-navbar', { display: 'none', opacity: 0, y: '-100%' });
                             } else if (data.next.namespace === 'home') {
@@ -1062,35 +1359,63 @@ texts.forEach(text => {
                             done();
                         }});
                         tl.to(curtain, { y: '0%', duration: 0.7, ease: 'power4.inOut' })
-                          .to(logo, { opacity: 1, duration: 0.3 }, "-=0.2");
+                          .to(logo, { opacity: 1, duration: 0.3 }, '-=0.2');
                     },
+
+                    // ── BEFORE ENTER ─────────────────────────────────────────
+                    // Fires AFTER leave completes & new container is in the DOM,
+                    // but BEFORE enter starts. The curtain is STILL fully covering —
+                    // perfect timing to set scroll position without user seeing anything.
+                    beforeEnter(data) {
+                        if (window._returnToProjects) {
+                            // Scroll to #projects section (invisible — curtain covers screen)
+                            const el = data.next.container.querySelector('#projects');
+                            if (el) {
+                                let top = 0, node = el;
+                                while (node && node !== document.body) {
+                                    top += node.offsetTop;
+                                    node = node.offsetParent;
+                                }
+                                window.scrollTo(0, top);
+                                document.documentElement.scrollTop = top;
+                                document.body.scrollTop = top;
+                            }
+                            window._returnToProjects = false;
+                        } else if (data.next.namespace === 'home') {
+                            // Restore previous scroll position on home page
+                            const saved = parseInt(sessionStorage.getItem('scroll_' + data.next.url.path)) || 0;
+                            window.scrollTo(0, saved);
+                        } else {
+                            // Sub-pages always start at top
+                            window.scrollTo(0, 0);
+                        }
+                    },
+
+                    // ── ENTER ────────────────────────────────────────────────
                     async enter(data) {
                         var done = this.async();
 
-                        // Scroll to top (or saved position) immediately while curtain covers screen
-                        window.scrollTo(0, window._pendingScrollY || 0);
-
+                        // Scroll was already set in beforeEnter — do NOT override it here.
                         if(data.next.container) data.next.container.style.opacity = '0';
-                        
+
                         var curtain = document.querySelector('.transition-curtain');
                         var logo = curtain.querySelector('.curtain-logo');
-                        
+
                         var tl = gsap.timeline({ onComplete: done });
                         tl.to(logo, { opacity: 0, duration: 0.3 })
-                          .to(curtain, { y: '-100%', duration: 0.7, ease: 'power4.inOut' }, "+=0.1")
+                          .to(curtain, { y: '-100%', duration: 0.7, ease: 'power4.inOut' }, '+=0.1')
                           .set(curtain, { y: '100%' });
-                          
+
                         if(data.next.container) gsap.to(data.next.container, { opacity: 1, duration: 0.1 });
-                        
-                        setTimeout(() => { 
-                            // Initialize scripts AFTER DOM is visible
+
+                        setTimeout(() => {
                             if (data.next.namespace === 'home') {
                                 gsap.from(data.next.container.querySelectorAll('.project-card'), {
                                     opacity: 0, y: 40, stagger: 0.1, duration: 0.6, ease: 'power3.out'
                                 });
-                                // initHomeScripts will handle scroll to #projects internally via _returnToProjects flag
                                 if (typeof window.initHomeScripts === 'function') window.initHomeScripts(data.next.container);
                                 if (typeof window.initNavbar === 'function') window.initNavbar();
+                                if (typeof window.initEffects === 'function') window.initEffects(data.next.container);
                             } else if (data.next.namespace === 'projects') {
                                 if (typeof window.initProjectsScripts === 'function') window.initProjectsScripts(data.next.container);
                             } else if (data.next.namespace === 'project-detail') {
@@ -1102,8 +1427,7 @@ texts.forEach(text => {
                                     });
                                 }
                             }
-                            
-                            // Clear Barba cache to ensure fresh data if projects were updated
+
                             if (barba.cache && typeof barba.cache.clear === 'function') {
                                 barba.cache.clear();
                             }
@@ -1114,6 +1438,328 @@ texts.forEach(text => {
         }
     </script>
 
+<script>
+// ════════════════════════════════════════════════════════════════
+// NEW INTERACTIVE EFFECTS
+// ════════════════════════════════════════════════════════════════
+
+// ── 1. Scroll Progress Bar ──
+(function() {
+    const bar = document.createElement('div');
+    bar.id = 'scroll-progress';
+    document.body.appendChild(bar);
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const h = document.documentElement;
+                const total = h.scrollHeight - h.clientHeight;
+                bar.style.width = total > 0 ? (h.scrollTop / total * 100) + '%' : '0%';
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+})();
+
+// ── 2. Particle Canvas System ──
+(function() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'particle-canvas';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: -1000, y: -1000 };
+    let isVisible = true;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.2;
+            this.speedY = (Math.random() - 0.5) * 0.2;
+            this.opacity = Math.random() * 0.25 + 0.05;
+            this.hue = 200 + Math.random() * 40;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if (dist < 120) {
+                const force = (120 - dist) / 120 * 0.8;
+                this.x -= (dx/dist) * force;
+                this.y -= (dy/dist) * force;
+            }
+            if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+                this.reset();
+            }
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+            ctx.fillStyle = `hsla(${this.hue}, 50%, 55%, ${this.opacity})`;
+            ctx.fill();
+        }
+    }
+
+    const count = Math.min(60, Math.floor(canvas.width * canvas.height / 20000));
+    for (let i=0; i<count; i++) particles.push(new Particle());
+
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    document.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+
+    function animateParticles() {
+        if (!isVisible) { requestAnimationFrame(animateParticles); return; }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        for (let i=0; i<particles.length; i++) {
+            for (let j=i+1; j<particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 100) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(100, 160, 255, ${0.06 * (1 - dist/100)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+})();
+
+// ── 3. Mouse Glow ──
+(function() {
+    const glow = document.createElement('div');
+    glow.id = 'mouse-glow';
+    document.body.appendChild(glow);
+    let gx = -500, gy = -500;
+    let currentGX = -500, currentGY = -500;
+    window.addEventListener('mousemove', e => { gx = e.clientX; gy = e.clientY; });
+    function updateGlow() {
+        currentGX += (gx - currentGX) * 0.08;
+        currentGY += (gy - currentGY) * 0.08;
+        glow.style.left = currentGX + 'px';
+        glow.style.top = currentGY + 'px';
+        requestAnimationFrame(updateGlow);
+    }
+    updateGlow();
+})();
+
+// ── 4. Magnetic Buttons ──
+(function() {
+    document.querySelectorAll('[data-magnetic]').forEach(btn => {
+        const wrap = document.createElement('span');
+        wrap.className = 'magnetic-wrap';
+        btn.parentNode.insertBefore(wrap, btn);
+        wrap.appendChild(btn);
+        let rafId = null;
+        wrap.addEventListener('mousemove', e => {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                const rect = wrap.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width/2;
+                const y = e.clientY - rect.top - rect.height/2;
+                const dist = Math.sqrt(x*x + y*y);
+                const maxDist = 150;
+                const strength = 0.25;
+                const factor = Math.min(dist / maxDist, 1) * strength;
+                wrap.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+                rafId = null;
+            });
+        });
+        wrap.addEventListener('mouseleave', () => {
+            if (rafId) cancelAnimationFrame(rafId);
+            wrap.style.transform = 'translate(0, 0)';
+        });
+    });
+})();
+
+// ── 5. Ripple Click Effect ──
+(function() {
+    document.addEventListener('click', function(e) {
+        const el = document.createElement('span');
+        el.className = 'ripple-effect';
+        const size = 200;
+        el.style.width = el.style.height = size + 'px';
+        el.style.left = (e.clientX - size/2) + 'px';
+        el.style.top = (e.clientY - size/2) + 'px';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 800);
+    });
+})();
+
+// ── 6. Text Scramble Effect ──
+(function() {
+    class TextScramble {
+        constructor(el) {
+            this.el = el;
+            this.chars = '!<>-_\\/[]{}—=+*^?#ABCXYZ0123456789';
+            this.update = this.update.bind(this);
+        }
+        setText(newText) {
+            const oldText = this.el.innerText;
+            const length = Math.max(oldText.length, newText.length);
+            const promise = new Promise(resolve => this.resolve = resolve);
+            this.queue = [];
+            for (let i=0; i<length; i++) {
+                const from = oldText[i] || '';
+                const to = newText[i] || '';
+                const start = Math.floor(Math.random() * 40);
+                const end = start + Math.floor(Math.random() * 40);
+                this.queue.push({ from, to, start, end });
+            }
+            cancelAnimationFrame(this.frameRequest);
+            this.frame = 0;
+            this.update();
+            return promise;
+        }
+        update() {
+            let output = '';
+            let complete = 0;
+            for (let i=0, n=this.queue.length; i<n; i++) {
+                let { from, to, start, end, char } = this.queue[i];
+                if (this.frame >= end) {
+                    complete++;
+                    output += to;
+                } else if (this.frame >= start) {
+                    if (!char || Math.random() < 0.28) {
+                        char = this.chars[Math.floor(Math.random() * this.chars.length)];
+                        this.queue[i].char = char;
+                    }
+                    output += `<span class="scramble-char">${char}</span>`;
+                } else {
+                    output += from;
+                }
+            }
+            this.el.innerHTML = output;
+            if (complete === this.queue.length) {
+                this.resolve();
+            } else {
+                this.frameRequest = requestAnimationFrame(this.update);
+                this.frame++;
+            }
+        }
+    }
+    // Store references globally so hero rotation can use it
+    window.TextScramble = TextScramble;
+})();
+
+// ── 7-9. Observer-based effects (reusable init) ──
+window.initEffects = function(container) {
+    container = container || document;
+    if (!window.IntersectionObserver) return;
+
+    // Kill any previous observers
+    if (window.__counterObs) window.__counterObs.disconnect();
+    if (window.__clipObs) window.__clipObs.disconnect();
+    if (window.__splitObs) window.__splitObs.disconnect();
+
+    // Animated Counters
+    window.__counterObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.dataset.counter);
+                const duration = parseInt(el.dataset.duration) || 2000;
+                const prefix = el.dataset.prefix || '';
+                const suffix = el.dataset.suffix || '';
+                const startTime = performance.now();
+                function animate(now) {
+                    const progress = Math.min((now - startTime) / duration, 1);
+                    const ease = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = prefix + Math.floor(ease * target) + suffix;
+                    if (progress < 1) requestAnimationFrame(animate);
+                    else el.textContent = prefix + target + suffix;
+                }
+                requestAnimationFrame(animate);
+                window.__counterObs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+    container.querySelectorAll('[data-counter]').forEach(el => window.__counterObs.observe(el));
+
+    // Clip Reveal
+    window.__clipObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                window.__clipObs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    container.querySelectorAll('.reveal-clip').forEach(el => window.__clipObs.observe(el));
+
+    // Split Text Reveal
+    function splitText(el) {
+        if (el.dataset._split) return;
+        el.dataset._split = '1';
+        const text = el.textContent;
+        const words = text.split(' ');
+        el.innerHTML = words.map(word => {
+            const chars = word.split('').map(ch =>
+                `<span class="split-char">${ch === ' ' ? '&nbsp;' : ch}</span>`
+            ).join('');
+            return `<span style="display:inline-block">${chars}</span>`;
+        }).join(' ');
+    }
+    window.__splitObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const chars = entry.target.querySelectorAll('.split-char');
+                chars.forEach((ch, i) => {
+                    setTimeout(() => ch.classList.add('is-visible'), i * 30);
+                });
+                window.__splitObs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    container.querySelectorAll('[data-split]').forEach(el => {
+        splitText(el);
+        window.__splitObs.observe(el);
+    });
+};
+// Run on initial load
+window.initEffects();
+
+// ── 10. Parallax Mouse Layers ──
+(function() {
+    document.querySelectorAll('[data-parallax]').forEach(el => {
+        const speed = parseFloat(el.dataset.parallax) || 0.05;
+        let px = 0, py = 0;
+        let currentPX = 0, currentPY = 0;
+        window.addEventListener('mousemove', e => {
+            const rect = el.parentElement ? el.parentElement.getBoundingClientRect() : { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            px = (e.clientX - centerX) * speed;
+            py = (e.clientY - centerY) * speed;
+        });
+        function updateParallax() {
+            currentPX += (px - currentPX) * 0.05;
+            currentPY += (py - currentPY) * 0.05;
+            el.style.transform = `translate(${currentPX}px, ${currentPY}px)`;
+            requestAnimationFrame(updateParallax);
+        }
+        updateParallax();
+    });
+})();
+</script>
     @stack('scripts')
 </body>
 </html>

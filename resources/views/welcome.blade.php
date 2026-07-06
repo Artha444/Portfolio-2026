@@ -7,6 +7,11 @@
 <section class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden text-center px-6 md:px-10 lg:px-16" id="home" data-intro-container>
 
 <!-- SVG Circle and Icons for Animation -->
+<!-- Parallax Floating Orbs -->
+<div data-parallax="0.03" class="parallax-layer w-96 h-96 rounded-full bg-gradient-to-br from-[#00668a]/5 to-transparent absolute -top-20 -right-20 z-0"></div>
+<div data-parallax="-0.04" class="parallax-layer w-80 h-80 rounded-full bg-gradient-to-tr from-[#4285F4]/5 to-transparent absolute -bottom-32 -left-20 z-0"></div>
+<div data-parallax="0.02" class="parallax-layer w-64 h-64 rounded-full bg-gradient-to-bl from-[#34A853]/5 to-transparent absolute top-1/3 left-1/4 z-0"></div>
+<div data-parallax="-0.02" class="parallax-layer w-72 h-72 rounded-full bg-gradient-to-tl from-[#EA4335]/5 to-transparent absolute bottom-1/4 right-1/3 z-0"></div>
 <svg class="absolute inset-0 w-full h-full z-0 pointer-events-none" id="hero-bg-elements" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
     <defs>
         <linearGradient id="gemini-gradient" x1="0%" y1="0%" x2="100%" y2="100%" gradientUnits="objectBoundingBox">
@@ -39,7 +44,7 @@
         <p class="font-body-md text-body-md text-on-surface-variant/70 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed intro-paragraph">
                         Seorang pelajar SMK jurusan Rekayasa Perangkat Lunak (RPL) yang antusias dalam belajar web development. Membangun berbagai proyek dari tugas sekolah hingga eksplorasi mandiri.
                     </p>
-        <a class="cta-button group inline-flex items-center justify-center gap-2 intro-cta" href="#projects">
+        <a data-magnetic class="cta-button group inline-flex items-center justify-center gap-2 intro-cta" href="#projects">
                         Explore Projects 
                         <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
                         <span class="shine"></span>
@@ -58,7 +63,7 @@
     <div class="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-24 items-center mb-32">
         <!-- Image Column -->
         <div class="md:col-span-2 flex justify-center order-1 md:order-2">
-            <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-xl bg-surface-container-high">
+            <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-xl bg-surface-container-high reveal-clip">
                 <!-- Ganti 'src' dengan path ke foto Anda -->
                 <img src="https://i.pravatar.cc/320?u=artha" alt="Foto Artha" class="w-full h-full object-cover">
                 <div class="absolute inset-0 border-4 border-surface-container-lowest rounded-full"></div>
@@ -73,7 +78,7 @@
             
             <h2 class="font-neue text-4xl md:text-5xl lg:text-[54px] text-primary mb-8 font-extrabold tracking-tight leading-[1.15]">
                 Pelajar SMK dengan <br class="hidden md:block" />
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary">Gairah untuk Kode.</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary" data-split>Gairah untuk Kode.</span>
             </h2>
             
             <div class="relative pl-6 md:pl-8 mb-8 border-l-4 border-secondary/30">
@@ -120,7 +125,7 @@
             <span class="font-label-sm text-[11px] font-bold text-[#00668a] uppercase tracking-widest">Selected Works</span>
         </div>
         
-        <h2 class="font-neue text-[clamp(50px,8vw,90px)] font-black leading-[1.0] tracking-tighter text-black mb-6">
+                <h2 class="font-neue text-[clamp(50px,8vw,90px)] font-black leading-[1.0] tracking-tighter text-black mb-6" data-split>
             Case Studies
         </h2>
         
@@ -131,11 +136,11 @@
         <!-- Stats Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             <div class="bg-white px-4 py-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center">
-                <h3 class="font-neue text-3xl font-black text-black mb-1">10+</h3>
+                <h3 class="font-neue text-3xl font-black text-black mb-1"><span data-counter="10" data-duration="1500" data-suffix="+">0</span></h3>
                 <p class="font-label-sm text-[11px] font-bold text-gray-500 uppercase tracking-widest">Proyek</p>
             </div>
             <div class="bg-white px-4 py-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center">
-                <h3 class="font-neue text-3xl font-black text-black mb-1">99%</h3>
+                <h3 class="font-neue text-3xl font-black text-black mb-1"><span data-counter="99" data-duration="1200" data-suffix="%">0</span></h3>
                 <p class="font-label-sm text-[11px] font-bold text-gray-500 uppercase tracking-widest">Kode Bersih</p>
             </div>
             <div class="bg-white px-4 py-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center">
@@ -143,7 +148,7 @@
                 <p class="font-label-sm text-[11px] font-bold text-gray-500 uppercase tracking-widest">Fokus Desain</p>
             </div>
             <div class="bg-white px-4 py-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center">
-                <h3 class="font-neue text-3xl font-black text-black mb-1">24/7</h3>
+                <h3 class="font-neue text-3xl font-black text-black mb-1"><span data-counter="247" data-duration="2000">0</span></h3>
                 <p class="font-label-sm text-[11px] font-bold text-gray-500 uppercase tracking-widest">Belajar</p>
             </div>
         </div>
@@ -155,7 +160,7 @@
     <div class="flex items-end justify-between mb-12 md:mb-16">
         <div>
             <span class="font-label-sm text-label-sm text-secondary uppercase editorial-tracking block mb-3">Selected Work</span>
-            <h2 class="font-neue text-[clamp(32px,5vw,56px)] font-extrabold leading-none tracking-tighter text-primary">
+            <h2 class="font-neue text-[clamp(32px,5vw,56px)] font-extrabold leading-none tracking-tighter text-primary" data-split>
                 Featured Projects
             </h2>
         </div>
@@ -172,7 +177,7 @@
         @foreach($display as $p)
         <a href="/project/{{ $p->id }}" class="group block no-underline project-card">
             <!-- Image wrapper (Kartu utamanya adalah gambar) -->
-            <div class="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden mb-5 bg-surface-container-high shadow-sm transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:shadow-2xl group-hover:-translate-y-2">
+            <div class="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden mb-5 bg-surface-container-high shadow-sm transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-2">
                 @if(!empty($p->images) && isset($p->images[0]))
                     <img src="{{ asset('storage/' . $p->images[0]) }}" alt="{{ $p->title }}" class="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105">
                 @else
@@ -307,7 +312,7 @@
 <label class="block font-label-sm text-label-sm text-on-surface-variant uppercase editorial-tracking mb-4">Message</label>
 <textarea class="w-full bg-transparent border-0 border-b border-outline-variant py-4 px-0 font-body-md text-body-md input-border-transition focus:ring-0 resize-none placeholder:text-outline/40" placeholder="Tell me about your project..." rows="4"></textarea>
 </div>
-<button class="bg-primary text-on-primary px-12 py-5 font-label-sm text-label-sm uppercase editorial-tracking flex items-center gap-3 transition-all hover:bg-secondary-container hover:text-on-secondary-container">
+            <button data-magnetic class="bg-primary text-on-primary px-12 py-5 font-label-sm text-label-sm uppercase editorial-tracking flex items-center gap-3 transition-all hover:bg-secondary-container hover:text-on-secondary-container">
                         Send Inquiry
                         <span class="material-symbols-outlined">send</span>
 </button>
