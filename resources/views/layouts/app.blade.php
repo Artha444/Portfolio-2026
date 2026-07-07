@@ -11,22 +11,24 @@
         theme: {
             extend: {
                 colors: {
-                    "surface-container-lowest": "#ffffff",
+                    "surface-container-lowest": "#faf7f2",
                     "on-background": "#1a1a2e",
                     "secondary": "#00668a",
-                    "surface-container-low": "#eef4ff",
-                    "outline-variant": "#c6c6cd",
-                    "surface-container-highest": "#d4e4fa",
-                    "primary": "#000000",
-                    "on-surface-variant": "#45464d",
+                    "surface-container-low": "#f0ece4",
+                    "outline-variant": "#d4cfc6",
+                    "surface-container-highest": "#e8e3d8",
+                    "primary": "#1a1a2e",
+                    "on-surface-variant": "#5c5760",
                     "on-primary": "#ffffff",
-                    "background": "#fafafa",
+                    "background": "#f7f5f0",
+                    "accent": "#d97706",
                 },
                 fontFamily: {
                     "headline-lg": ["Inter"],
                     "headline-md": ["Inter"],
                     "body-md": ["Inter"],
-                    "label-sm": ["Inter"]
+                    "label-sm": ["Inter"],
+                    "mono": ["JetBrains Mono", "monospace"],
                 },
                 fontSize: {
                     "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.015em", "fontWeight": "500"}],
@@ -37,9 +39,9 @@
         }
     }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
 
     <style>
         /* Sembunyikan scrollbar untuk pengalaman UI yang lebih bersih (seperti aplikasi) */
@@ -146,6 +148,7 @@
     to { stroke-dashoffset: 0; }
 }
 
+
 @keyframes marquee {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
@@ -179,6 +182,180 @@
 .intro-paragraph { animation-delay: 1.6s; }
 .intro-cta { animation-delay: 1.8s; }
 .intro-scroll-down { animation-delay: 2.0s; }
+
+/* ── Desktop Aesthetic ── */
+
+/* Hand-drawn SVG underline */
+.desktop-underline {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    pointer-events: none;
+    opacity: 0.35;
+}
+
+/* Desktop Window Chrome */
+.desktop-window {
+    background: #faf7f2;
+    border: 1px solid #e0dbd0;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(26,26,46,0.06),
+                0 2px 8px rgba(26,26,46,0.04),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+}
+.desktop-window .window-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #f0ece4;
+    border-bottom: 1px solid #e0dbd0;
+    position: relative;
+}
+.desktop-window .window-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
+}
+.desktop-window .window-dot:hover { opacity: 0.7; }
+.desktop-window .dot-red { background: #ff5f56; border: 1px solid #e0443e; }
+.desktop-window .dot-yellow { background: #ffbd2e; border: 1px solid #dea123; }
+.desktop-window .dot-green { background: #27c93f; border: 1px solid #1aab29; }
+.desktop-window .window-title-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #8b8680;
+    margin-left: 4px;
+    letter-spacing: -0.01em;
+}
+
+/* Sticky Note Tag */
+.sticky-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px 5px 10px;
+    background: #fef7e0;
+    border: 1px solid #f5e6b8;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #8b6914;
+    transform: rotate(-1deg);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sticky-tag:hover {
+    transform: rotate(0deg) translateY(-2px);
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.06);
+}
+
+/* Folder icon inline */
+.folder-icon-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 16px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+.folder-icon-inline svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Terminal inline caption */
+.terminal-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #8b8680;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.terminal-caption .prompt-symbol {
+    color: #27c93f;
+}
+
+/* Desktop hero enhancement */
+.hero-desktop-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, #f7f5f0 0%, #f0ece4 100%);
+}
+
+/* Ambient blob layer for hero */
+.hero-ambient-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    will-change: transform;
+    opacity: 0.4;
+}
+
+@keyframes blobFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+    100% { transform: translate(15px, -15px) scale(1.05); }
+}
+
+@keyframes windowFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-12px); }
+}
+
+/* Hand-drawn connector line */
+.desktop-connector {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+/* Rotating text desktop style */
+.hero-text-wrapper .hero-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+/* Desktop aesthetic CTA */
+.desktop-cta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    background: #1a1a2e;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 4px 16px rgba(26,26,46,0.12),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.desktop-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,26,46,0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-ambient-blob {
+        animation: none !important;
+    }
+    .desktop-window {
+        animation: none !important;
+    }
+}
 
 /* Masking untuk membuat ikon menghilang di dekat judul */
 #hero-bg-elements {
@@ -329,18 +506,35 @@
     will-change: transform;
 }
 
-/* ── Ripple Effect ── */
-.ripple-effect {
+/* ── Ink Splash Click Effect ── */
+.ink-splash {
     position: fixed;
-    border-radius: 50%;
-    background: rgba(0,102,138,0.08);
-    transform: scale(0);
-    animation: rippleAnim 0.8s ease-out forwards;
     pointer-events: none;
     z-index: 99999;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(26,26,46,0.25);
+    animation: inkSplash 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-@keyframes rippleAnim {
-    to { transform: scale(4); opacity: 0; }
+@keyframes inkSplash {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+}
+
+.ink-ring {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(26,26,46,0.15);
+    animation: inkRing 0.5s ease-out forwards;
+}
+@keyframes inkRing {
+    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
 }
 
 /* ── Reveal Clip (Image Reveal) ── */
@@ -530,7 +724,7 @@ body:not(.cursor-disabled) .project-card {
 
 <!-- Navigation Shell -->
 <!-- Full-width container for the blur effect -->
-<div id="global-navbar" class="fixed top-0 left-0 w-full z-50 py-4 backdrop-blur-lg navbar-glass-effect intro-navbar" style="{{ request()->is('project/*') ? 'display: none; opacity: 0; transform: translateY(-100%);' : '' }}">
+<div id="global-navbar" class="fixed top-0 left-0 w-full z-50 py-4 backdrop-blur-lg navbar-glass-effect intro-navbar" style="{{ (request()->is('project/*') || request()->is('projects')) ? 'display: none; opacity: 0; transform: translateY(-100%);' : '' }}">
     <!-- Centered and styled navbar -->
     <nav class="max-w-[1280px] mx-auto bg-surface-container-lowest/80 text-on-background border border-outline-variant/30 flex justify-between items-center px-6 py-3 rounded-2xl shadow-lg shadow-primary/5">
 
@@ -543,17 +737,14 @@ body:not(.cursor-disabled) .project-card {
         <!-- Nav Links -->
         <a href="#about" data-target="about" class="nav-link group relative font-label-md text-label-md hover:text-primary transition-colors duration-200">
             <span class="jump-text inline-flex gap-[2px]">About</span>
-            <span class="underline absolute bottom-[-7px] left-0 w-0 h-[2.5px] bg-primary transition-all duration-300"></span>
         </a>
         
         <a href="#projects" data-target="projects" class="nav-link group relative font-label-md text-label-md hover:text-primary transition-colors duration-200">
             <span class="jump-text inline-flex gap-[2px]">Projects</span>
-            <span class="underline absolute bottom-[-7px] left-0 w-0 h-[2.5px] bg-primary transition-all duration-300"></span>
         </a>
         
         <a href="#capabilities" data-target="capabilities" class="nav-link group relative font-label-md text-label-md hover:text-primary transition-colors duration-200">
             <span class="jump-text inline-flex gap-[2px]">Capabilities</span>
-            <span class="underline absolute bottom-[-7px] left-0 w-0 h-[2.5px] bg-primary transition-all duration-300"></span>
         </a>
 
         <!-- Contact Button dengan Animasi -->
@@ -639,33 +830,12 @@ document.body.addEventListener('click', function(e) {
     }
 });
 
-// Staggered animation specific for nav-links
+// Nav-link click handler — set active state
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function(e) {
         // Scroll is already handled by the global handler above
-        // Reset semua link
-        document.querySelectorAll('.nav-link').forEach(l => {
-            l.classList.remove('active');
-            l.querySelector('.underline').style.width = '0';
-        });
-
-        // Aktifkan link ini
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
-        
-        // Reset animasi dulu
-        const spans = this.querySelectorAll('.jump-text span');
-        spans.forEach(span => {
-            span.style.animation = 'none';
-            void span.offsetWidth; // trigger reflow
-        });
-
-        // Jalankan animasi bergantian
-        spans.forEach((span, index) => {
-            span.style.animation = `jumpLetter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards ${index * 35}ms`;
-        });
-
-        // Underline
-        this.querySelector('.underline').style.width = '100%';
     });
 });
 
@@ -684,25 +854,14 @@ window.initNavbar = function() {
         threshold: 0.4
     };
 
-    window.sectionObserver = new IntersectionObserver((entries, observer) => {
+    window.sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const targetId = entry.target.id;
                 navLinks.forEach(link => {
                     link.classList.remove('active');
-                    const spans = link.querySelectorAll('.jump-text span');
-                    spans.forEach(span => { span.style.animation = 'none'; });
-                    link.querySelector('.underline').style.width = '0';
-
                     if (link.getAttribute('data-target') === targetId) {
                         link.classList.add('active');
-                        link.querySelector('.underline').style.width = '100%';
-                        const activeSpans = link.querySelectorAll('.jump-text span');
-                        activeSpans.forEach(span => {
-                            span.style.animation = 'none';
-                            void span.offsetWidth;
-                            span.style.animation = `jumpLetter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards ${Array.from(activeSpans).indexOf(span) * 35}ms`;
-                        });
                     }
                 });
             }
@@ -879,67 +1038,94 @@ texts.forEach(text => {
             // Clear existing icons to prevent duplicates
             svgContainer.querySelectorAll('.intro-hero-icon').forEach(el => el.remove());
 
-            const icons = ['◆','◇','○','●','△','▲','□','■','☆','★','✦','✧'];
+            // Clone SVG icons from defs directly (no <use> — more reliable)
+            const iconIds = [
+                'icon-folder', 'icon-terminal', 'icon-browser', 'icon-code',
+                'icon-settings', 'icon-palette'
+            ];
             const numIcons = 12;
             const radius = 230;
             const center = 500;
             let particles = [];
 
-            // Palet warna untuk ikon-ikon standar
             const iconColors = [
-                '#4285F4', // Biru
-                '#34A853', // Hijau
-                '#FBBC05', // Kuning
-                '#EA4335', // Merah
-                '#9C27B0', // Ungu
-                '#00BCD4', // Cyan
-                '#FF9800', // Oranye
-                '#E91E63', // Pink
-                '#607D8B', // Biru Abu-abu
-                '#795548'  // Cokelat
+                '#4285F4', '#34A853', '#FBBC05', '#EA4335',
+                '#9C27B0', '#00BCD4', '#FF9800', '#E91E63',
+                '#607D8B', '#795548', '#4285F4', '#34A853'
             ];
+
+            function createIconElement(iconId, color) {
+                const template = svgContainer.querySelector('#' + iconId);
+                if (!template) return null;
+                const g = template.cloneNode(true);
+                g.removeAttribute('id');
+                // Apply color to all paths/lines/polyline/rect/circle inside
+                g.querySelectorAll('path, polyline, line, rect, circle').forEach(el => {
+                    const currentStroke = el.getAttribute('stroke');
+                    if (currentStroke === 'currentColor' || currentStroke === 'none' || !currentStroke) {
+                        // Keep 'none' as is, set color for currentColor
+                    }
+                    if (el.getAttribute('stroke') !== 'none') {
+                        el.setAttribute('stroke', color);
+                    }
+                    if (el.getAttribute('fill') === 'currentColor') {
+                        el.setAttribute('fill', color);
+                    }
+                });
+                return g;
+            }
+
             for (let i = 0; i < numIcons; i++) {
                 const angle = (i / numIcons) * Math.PI * 2;
                 const x = center + Math.cos(angle) * radius;
                 const y = center + Math.sin(angle) * radius;
+                const color = iconColors[i % iconColors.length];
 
-                const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                textEl.setAttribute('x', x);
-                textEl.setAttribute('y', y);
-                textEl.setAttribute('font-family', 'Inter, sans-serif');
-                textEl.setAttribute('font-size', '40');
-                textEl.setAttribute('font-weight', '600');
-                textEl.setAttribute('text-anchor', 'middle');
-                textEl.setAttribute('dominant-baseline', 'central');
-                textEl.classList.add('intro-hero-icon');
-                const iconChar = icons[i % icons.length];
-                textEl.textContent = iconChar;
+                const iconEl = createIconElement(iconIds[i % iconIds.length], color);
+                if (!iconEl) continue;
 
-                let particleColor;
-                if (iconChar === '✦' || iconChar === '✧') {
-                    particleColor = 'url(#gemini-gradient)'; // Gunakan gradasi Gemini
-                } else {
-                    particleColor = iconColors[i % iconColors.length]; // Gunakan warna dari palet
-                }
-                textEl.setAttribute('fill', particleColor);
+                iconEl.classList.add('intro-hero-icon');
+                iconEl.setAttribute('transform', `translate(${x-10}, ${y-10}) scale(0.85)`);
+                svgContainer.appendChild(iconEl);
 
-                svgContainer.appendChild(textEl);
-                
-                // Animate with GSAP to avoid scroll interrupt issues
-                gsap.fromTo(textEl, 
-                    { opacity: 0, scale: 0.5, transformOrigin: "50% 50%" },
-                    { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.56)", delay: 1.2 + i * 0.07 }
+                gsap.fromTo(iconEl, 
+                    { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" },
+                    { opacity: 1, scale: 0.85, duration: 0.6, ease: "back.out(1.56)", delay: 1.2 + i * 0.07 }
                 );
 
+                // Idle floating animation for each icon
+                const floatDelay = i * 0.3;
+                const floatDuration = 2 + (i % 3) * 0.5;
+                const floatAmount = 4 + (i % 4) * 2;
+                gsap.to(iconEl, {
+                    y: `+=${floatAmount}`,
+                    duration: floatDuration,
+                    ease: "sine.inOut",
+                    yoyo: true,
+                    repeat: -1,
+                    delay: floatDelay,
+                    transformOrigin: "50% 50%"
+                });
+                // Subtle rotation idle
+                gsap.to(iconEl, {
+                    rotation: `${(i % 2 === 0 ? '' : '-')}${3 + (i % 3)}`,
+                    duration: floatDuration * 0.7,
+                    ease: "sine.inOut",
+                    yoyo: true,
+                    repeat: -1,
+                    delay: floatDelay + 0.5,
+                    transformOrigin: "50% 50%"
+                });
+
                 particles.push({
-                    el: textEl, // element SVG
-                    angle: angle, // sudut orbit saat ini
-                    speed: 0.1, // kecepatan orbit
-                    defaultColor: particleColor, // Simpan warna asli
-                    x: x, // posisi x saat ini
-                    y: y, // posisi y saat ini
-                    vx: 0, // kecepatan x untuk interaksi
-                    vy: 0  // kecepatan y untuk interaksi
+                    el: iconEl,
+                    angle: angle,
+                    speed: 0.1,
+                    defaultColor: color,
+                    x: x,
+                    y: y,
+                    vx: 0,
+                    vy: 0
                 });
             }
 
@@ -968,13 +1154,20 @@ texts.forEach(text => {
                         const force = (interactionRadius - distance) / interactionRadius;
                         p.vx += (dx / distance) * force * 0.5; // Dorong menjauh dari mouse
                         p.vy += (dy / distance) * force * 0.5;
-                        // Untuk ikon gradasi, kita tidak ubah warnanya saat hover agar gradasi tetap terlihat
-                        if (p.defaultColor !== 'url(#gemini-gradient)') {
-                            p.el.setAttribute('fill', hoverColor); // Ubah warna saat dekat
-                        }
+                        // Ubah warna elemen ikon saat hover
+                        p.el.querySelectorAll('path, polyline, line, rect, circle').forEach(el => {
+                            if (el.getAttribute('stroke') !== 'none') {
+                                el.setAttribute('stroke', hoverColor);
+                            }
+                        });
                     } else {
-                        if (p.el.getAttribute('fill') !== p.defaultColor) {
-                            p.el.setAttribute('fill', p.defaultColor); // Kembalikan ke warna asli
+                        const currentColor = p.el.querySelector('path')?.getAttribute('stroke');
+                        if (currentColor && currentColor !== p.defaultColor) {
+                            p.el.querySelectorAll('path, polyline, line, rect, circle').forEach(el => {
+                                if (el.getAttribute('stroke') !== 'none') {
+                                    el.setAttribute('stroke', p.defaultColor);
+                                }
+                            });
                         }
                     }
 
@@ -983,9 +1176,14 @@ texts.forEach(text => {
                     p.vy += (orbitalY - p.y) * 0.02;
 
                     // 5. Terapkan friksi dan update posisi
-                    p.vx *= 0.88; p.vy *= 0.88; // Efek peredam (lebih sedikit, agar lebih 'kenyal')
+                    p.vx *= 0.88; p.vy *= 0.88;
                     p.x += p.vx; p.y += p.vy;
-                    p.el.setAttribute('x', p.x); p.el.setAttribute('y', p.y);
+                    p.el.setAttribute('transform', `translate(${p.x-10}, ${p.y-10}) scale(0.85)`);
+                    // Also update the stored positions for color-change elements
+                    if (p.el._storedX !== undefined) {
+                        p.el._storedX = p.x;
+                        p.el._storedY = p.y;
+                    }
                 });
                 window.orbitReq = requestAnimationFrame(animateOrbit);
             }
@@ -1033,18 +1231,33 @@ texts.forEach(text => {
         // --- Project Cards Scroll Animation ---
         const projectCards = container.querySelectorAll('.project-card');
         if (projectCards.length > 0) {
-            gsap.from(projectCards, {
-                scrollTrigger: {
-                    trigger: '#projects',
-                    start: 'top 75%',
-                    toggleActions: 'play none none reverse'
-                },
-                y: 50,
-                opacity: 0,
-                scale: 0.95,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: 'power3.out'
+            // Clear any leftover GSAP inline styles from previous transitions
+            gsap.set(projectCards, { clearProps: 'all' });
+
+            gsap.fromTo(projectCards,
+                { y: 50, opacity: 0, scale: 0.95 },
+                {
+                    scrollTrigger: {
+                        trigger: container.querySelector('#projects'),
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse',
+                        invalidateOnRefresh: true,
+                    },
+                    y: 0,
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.8,
+                    stagger: 0.15,
+                    ease: 'power3.out',
+                    immediateRender: false,
+                }
+            );
+
+            // Refresh ScrollTrigger after scroll position has been restored
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    ScrollTrigger.refresh();
+                }, 200);
             });
         }
 
@@ -1073,17 +1286,79 @@ texts.forEach(text => {
             setTimeout(clearCssFn, 2500);
         }
 
-        if (heroSection && heroContent) {
+        // ── Multi-Layer Cursor Parallax System ──
+        if (heroSection) {
+            const parallaxLayers = heroSection.querySelectorAll('[data-parallax-layer]');
+            const layerData = [];
+
+            parallaxLayers.forEach(el => {
+                const speed = parseFloat(el.dataset.parallaxLayer) || 0.02;
+                el.style.willChange = 'transform';
+                layerData.push({ el, speed, currentX: 0, currentY: 0, targetX: 0, targetY: 0 });
+            });
+
+            // Smooth tilt values for the content wrapper
+            let tiltTargetX = 0, tiltTargetY = 0;
+            let tiltCurrentX = 0, tiltCurrentY = 0;
+            let heroMouseActive = false;
+
             heroSection.addEventListener('mousemove', (e) => {
                 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+                heroMouseActive = true;
                 const { left, top, width, height } = heroSection.getBoundingClientRect();
-                const rotateX = (((e.clientY - top) / height) - 0.5) * 12;
-                const rotateY = (((e.clientX - left) / width) - 0.5) * -12;
-                heroContent.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                const normalX = ((e.clientX - left) / width - 0.5) * 2;  // -1 to 1
+                const normalY = ((e.clientY - top) / height - 0.5) * 2;  // -1 to 1
+
+                // Set parallax targets for each layer
+                layerData.forEach(layer => {
+                    layer.targetX = normalX * layer.speed * width;
+                    layer.targetY = normalY * layer.speed * height;
+                });
+
+                // Set tilt target (subtle 3D perspective on content)
+                if (heroContent) {
+                    tiltTargetX = normalY * -6;   // rotateX based on Y
+                    tiltTargetY = normalX * 6;    // rotateY based on X
+                }
             });
+
             heroSection.addEventListener('mouseleave', () => {
-                heroContent.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                heroMouseActive = false;
+                // Spring back to center
+                layerData.forEach(layer => {
+                    layer.targetX = 0;
+                    layer.targetY = 0;
+                });
+                tiltTargetX = 0;
+                tiltTargetY = 0;
             });
+
+            // Smooth animation loop with spring interpolation
+            let heroParallaxRAF;
+            function animateHeroParallax() {
+                const lerp = 0.06; // Smooth spring factor
+
+                layerData.forEach(layer => {
+                    layer.currentX += (layer.targetX - layer.currentX) * lerp;
+                    layer.currentY += (layer.targetY - layer.currentY) * lerp;
+
+                    // Snap to zero when close enough to avoid micro-jitter
+                    if (Math.abs(layer.currentX) < 0.01 && Math.abs(layer.targetX) === 0) layer.currentX = 0;
+                    if (Math.abs(layer.currentY) < 0.01 && Math.abs(layer.targetY) === 0) layer.currentY = 0;
+
+                    layer.el.style.transform = `translate3d(${layer.currentX}px, ${layer.currentY}px, 0)`;
+                });
+
+                // Tilt on content
+                if (heroContent) {
+                    tiltCurrentX += (tiltTargetX - tiltCurrentX) * lerp;
+                    tiltCurrentY += (tiltTargetY - tiltCurrentY) * lerp;
+                    heroContent.style.transform = `perspective(1000px) rotateX(${tiltCurrentX}deg) rotateY(${tiltCurrentY}deg) scale3d(1.02, 1.02, 1.02)`;
+                }
+
+                heroParallaxRAF = requestAnimationFrame(animateHeroParallax);
+            }
+            animateHeroParallax();
         }
 
         // --- Interactive Title Animation on Mouse Move ---
@@ -1152,6 +1427,7 @@ texts.forEach(text => {
         ];
 
         function getLabelFor(el) {
+            if (!el) return null;
             for (const entry of labelMap) {
                 if (entry.test(el)) return entry;
             }
@@ -1161,6 +1437,8 @@ texts.forEach(text => {
         let leaveTimer = null;
 
         function getLogicalTarget(el) {
+            // Skip elements inside hero SVG (background decorative icons)
+            if (el.closest('#hero-bg-elements')) return null;
             // Walk up to find the closest interactive parent
             const interactiveSelectors = 'a, button, [onclick], input, textarea, [class*="card"], [data-tilt], img';
             const closest = el.closest(interactiveSelectors);
@@ -1350,7 +1628,7 @@ texts.forEach(text => {
                             if (data.current.container) {
                                 gsap.set(data.current.container, { opacity: 0, display: 'none' });
                             }
-                            if (data.next.namespace === 'project-detail') {
+                            if (data.next.namespace === 'project-detail' || data.next.namespace === 'projects') {
                                 gsap.set('#global-navbar', { display: 'none', opacity: 0, y: '-100%' });
                             } else if (data.next.namespace === 'home') {
                                 gsap.set('#global-navbar', { display: 'block' });
@@ -1410,9 +1688,11 @@ texts.forEach(text => {
 
                         setTimeout(() => {
                             if (data.next.namespace === 'home') {
-                                gsap.from(data.next.container.querySelectorAll('.project-card'), {
-                                    opacity: 0, y: 40, stagger: 0.1, duration: 0.6, ease: 'power3.out'
-                                });
+                                // Ensure project cards are visible before initHomeScripts
+                                // sets up its own ScrollTrigger animation
+                                const cards = data.next.container.querySelectorAll('.project-card');
+                                gsap.set(cards, { clearProps: 'all' });
+
                                 if (typeof window.initHomeScripts === 'function') window.initHomeScripts(data.next.container);
                                 if (typeof window.initNavbar === 'function') window.initNavbar();
                                 if (typeof window.initEffects === 'function') window.initEffects(data.next.container);
@@ -1590,17 +1870,33 @@ texts.forEach(text => {
     });
 })();
 
-// ── 5. Ripple Click Effect ──
+// ── 5. Ink Splash Click Effect ──
 (function() {
     document.addEventListener('click', function(e) {
-        const el = document.createElement('span');
-        el.className = 'ripple-effect';
-        const size = 200;
-        el.style.width = el.style.height = size + 'px';
-        el.style.left = (e.clientX - size/2) + 'px';
-        el.style.top = (e.clientY - size/2) + 'px';
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 800);
+        // Ink ring di posisi klik
+        const ring = document.createElement('span');
+        ring.className = 'ink-ring';
+        ring.style.left = e.clientX + 'px';
+        ring.style.top = e.clientY + 'px';
+        document.body.appendChild(ring);
+        setTimeout(() => ring.remove(), 500);
+
+        // 4-6 ink dots menyebar (seperti percikan tinta di kertas)
+        const count = 4 + Math.floor(Math.random() * 3);
+        for (let i = 0; i < count; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'ink-splash';
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 20 + Math.random() * 40;
+            dot.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+            dot.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+            dot.style.left = (e.clientX - 3) + 'px';
+            dot.style.top = (e.clientY - 3) + 'px';
+            dot.style.background = `rgba(26,26,46,${0.12 + Math.random() * 0.15})`;
+            dot.style.width = dot.style.height = (4 + Math.random() * 6) + 'px';
+            document.body.appendChild(dot);
+            setTimeout(() => dot.remove(), 700);
+        }
     });
 })();
 
@@ -1737,23 +2033,24 @@ window.initEffects = function(container) {
 // Run on initial load
 window.initEffects();
 
-// ── 10. Parallax Mouse Layers ──
+// ── 10. Parallax Mouse Layers (Ambient Blobs) ──
 (function() {
     document.querySelectorAll('[data-parallax]').forEach(el => {
         const speed = parseFloat(el.dataset.parallax) || 0.05;
         let px = 0, py = 0;
         let currentPX = 0, currentPY = 0;
+        el.style.willChange = 'transform';
         window.addEventListener('mousemove', e => {
             const rect = el.parentElement ? el.parentElement.getBoundingClientRect() : { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
-            px = (e.clientX - centerX) * speed;
-            py = (e.clientY - centerY) * speed;
+            px = (e.clientX - centerX) * speed * 3;
+            py = (e.clientY - centerY) * speed * 3;
         });
         function updateParallax() {
-            currentPX += (px - currentPX) * 0.05;
-            currentPY += (py - currentPY) * 0.05;
-            el.style.transform = `translate(${currentPX}px, ${currentPY}px)`;
+            currentPX += (px - currentPX) * 0.08;
+            currentPY += (py - currentPY) * 0.08;
+            el.style.transform = `translate3d(${currentPX}px, ${currentPY}px, 0)`;
             requestAnimationFrame(updateParallax);
         }
         updateParallax();

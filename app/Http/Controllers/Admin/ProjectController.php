@@ -37,6 +37,7 @@ class ProjectController extends Controller
             'tags' => 'required|string',
             'description' => 'required|string',
             'link' => 'nullable|url',
+            'board_position' => 'nullable|string|in:none,center,top_left,top_right,bottom_left,bottom_right',
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
@@ -51,12 +52,19 @@ class ProjectController extends Controller
             }
         }
 
+        $boardPosition = $request->board_position ?? 'none';
+        
+        if ($boardPosition !== 'none') {
+            Project::where('board_position', $boardPosition)->update(['board_position' => 'none']);
+        }
+
         Project::create([
             'title' => $request->title,
             'category' => $request->category,
             'tags' => $tags,
             'description' => $request->description,
             'link' => $request->link,
+            'board_position' => $boardPosition,
             'images' => $imagePaths
         ]);
 
@@ -82,18 +90,26 @@ class ProjectController extends Controller
             'tags' => 'required|string',
             'description' => 'required|string',
             'link' => 'nullable|url',
+            'board_position' => 'nullable|string|in:none,center,top_left,top_right,bottom_left,bottom_right',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         $tags = array_map('trim', explode(',', $request->tags));
         
+        $boardPosition = $request->board_position ?? 'none';
+        
+        if ($boardPosition !== 'none' && $project->board_position !== $boardPosition) {
+            Project::where('board_position', $boardPosition)->update(['board_position' => 'none']);
+        }
+
         $data = [
             'title' => $request->title,
             'category' => $request->category,
             'tags' => $tags,
             'description' => $request->description,
             'link' => $request->link,
+            'board_position' => $boardPosition,
         ];
 
         if ($request->hasFile('images')) {

@@ -72,6 +72,21 @@
                 <span class="material-symbols-outlined text-[20px]">code</span>
                 <span class="font-medium text-sm">Skills</span>
             </a>
+
+            <p class="px-4 pt-4 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Communication</p>
+
+            <a href="{{ route('admin.messages.index') }}" class="flex items-center justify-between px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.messages.*') ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[20px]">inbox</span>
+                    <span class="font-medium text-sm">Messages</span>
+                </div>
+                @php
+                    $unreadCount = \App\Models\Message::where('is_read', false)->count();
+                @endphp
+                @if($unreadCount > 0)
+                <span class="bg-indigo-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $unreadCount }}</span>
+                @endif
+            </a>
         </nav>
 
         <div class="p-4 border-t border-slate-800">
@@ -89,14 +104,23 @@
             <div>
                 <h1 class="text-xl font-semibold text-slate-800">@yield('header_title', 'Dashboard')</h1>
             </div>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2 cursor-pointer group">
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-2">
                     <div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">
                         A
                     </div>
                     <div class="hidden md:block">
-                        <p class="text-sm font-semibold text-slate-700 group-hover:text-indigo-600 transition-colors">Artha Admin</p>
+                        <p class="text-sm font-semibold text-slate-700">Artha Admin</p>
                     </div>
+                </div>
+                <div class="border-l border-slate-200 pl-6">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="text-sm font-medium text-slate-500 hover:text-red-600 transition-colors flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">logout</span>
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </div>
         </header>

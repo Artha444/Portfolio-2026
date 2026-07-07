@@ -35,4 +35,22 @@ class PageController extends Controller
 
         return view('project-detail', compact('project', 'related'));
     }
+
+    public function submitContact(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string',
+        ]);
+
+        \App\Models\Message::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+            'is_read' => false,
+        ]);
+
+        return redirect('/#contact')->with('success', 'Pesan Anda berhasil dikirim! Saya akan segera merespons via email.');
+    }
 }
