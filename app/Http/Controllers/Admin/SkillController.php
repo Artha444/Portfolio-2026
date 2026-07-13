@@ -32,10 +32,16 @@ class SkillController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|in:development,design_tool'
+            'type' => 'required|in:development,design_tool',
+            'icon' => 'nullable|string|max:255',
+            'color_class' => 'nullable|string|max:255',
         ]);
 
-        Skill::create($request->only(['name', 'type']));
+        $data = $request->all();
+        // default icon jika field icon tidak dikirim dari form
+        $data['icon'] = $data['icon'] ?? 'code';
+
+        Skill::create($data);
 
         return redirect()->route('admin.skills.index')->with('success', 'Skill created successfully.');
     }
@@ -55,10 +61,16 @@ class SkillController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|in:development,design_tool'
+            'type' => 'required|in:development,design_tool',
+            'icon' => 'nullable|string|max:255',
+            'color_class' => 'nullable|string|max:255',
         ]);
 
-        $skill->update($request->only(['name', 'type']));
+        $data = $request->all();
+        // default icon jika field icon tidak dikirim dari form
+        $data['icon'] = $data['icon'] ?? 'code';
+
+        $skill->update($data);
 
         return redirect()->route('admin.skills.index')->with('success', 'Skill updated successfully.');
     }

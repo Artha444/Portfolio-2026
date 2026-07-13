@@ -11,17 +11,17 @@
         theme: {
             extend: {
                 colors: {
-                    "surface-container-lowest": "#faf7f2",
-                    "on-background": "#1a1a2e",
-                    "secondary": "#00668a",
-                    "surface-container-low": "#f0ece4",
-                    "outline-variant": "#d4cfc6",
-                    "surface-container-highest": "#e8e3d8",
-                    "primary": "#1a1a2e",
-                    "on-surface-variant": "#5c5760",
-                    "on-primary": "#ffffff",
-                    "background": "#f7f5f0",
-                    "accent": "#d97706",
+                    "surface-container-lowest": "var(--bg-color)",
+                    "on-background": "var(--text-color)",
+                    "secondary": "var(--secondary-color)",
+                    "surface-container-low": "var(--container-low)",
+                    "outline-variant": "var(--outline)",
+                    "surface-container-highest": "var(--container-high)",
+                    "primary": "var(--primary-color)",
+                    "on-surface-variant": "var(--text-muted)",
+                    "on-primary": "var(--on-primary)",
+                    "background": "var(--bg-color)",
+                    "accent": "var(--accent-color)",
                 },
                 fontFamily: {
                     "headline-lg": ["Inter"],
@@ -64,6 +64,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            perspective: 1200px;
+            overflow: hidden;
+        }
+        .transition-curtain::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 40%, rgba(0,102,138,0.15) 50%, transparent 60%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        .transition-curtain.is-active::before {
+            opacity: 1;
         }
         .transition-curtain .curtain-logo {
             font-family: 'Hanken Grotesk', sans-serif;
@@ -72,6 +86,20 @@
             color: #fff;
             opacity: 0;
             letter-spacing: -0.03em;
+            position: relative;
+            z-index: 2;
+        }
+        .transition-curtain .curtain-accent {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #00668a, #d97706, #00668a);
+            background-size: 200% 100%;
+            z-index: 2;
+            transform: scaleX(0);
+            transform-origin: left center;
         }
 .cta-button {
     position: relative;
@@ -284,31 +312,7 @@
     color: #27c93f;
 }
 
-/* Desktop hero enhancement */
-.hero-desktop-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: linear-gradient(180deg, #f7f5f0 0%, #f0ece4 100%);
-}
-
-/* Ambient blob layer for hero */
-.hero-ambient-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    pointer-events: none;
-    will-change: transform;
-    opacity: 0.4;
-}
-
-@keyframes blobFloat {
-    0% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -40px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.95); }
-    100% { transform: translate(15px, -15px) scale(1.05); }
-}
+<!-- Desktop hero enhancement -->
 
 @keyframes windowFloat {
     0% { transform: translateY(0); }
@@ -488,6 +492,164 @@
     pointer-events: none;
 }
 
+/* ── Nav Link Hover Jump Animation ── */
+.nav-link .jump-text span {
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: calc(var(--i, 0) * 35ms);
+}
+.nav-link:hover .jump-text span {
+    transform: translateY(-5px);
+}
+.nav-link:not(:hover) .jump-text span {
+    transform: translateY(0);
+    transition-delay: 0ms !important;
+}
+
+/* ── Reveal on Scroll Section Entrance ── */
+.section-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section-reveal-delay-1 { transition-delay: 0.1s; }
+.section-reveal-delay-2 { transition-delay: 0.2s; }
+.section-reveal-delay-3 { transition-delay: 0.3s; }
+.section-reveal-delay-4 { transition-delay: 0.4s; }
+
+:root {
+    --bg-color: #faf7f2;
+    --text-color: #1a1a2e;
+    --secondary-color: #00668a;
+    --container-low: #f0ece4;
+    --outline: #d4cfc6;
+    --container-high: #e8e3d8;
+    --primary-color: #1a1a2e;
+    --text-muted: #5c5760;
+    --on-primary: #ffffff;
+    --accent-color: #d97706;
+
+    --global-bg: #f7f5f0;
+    --global-gradient: radial-gradient(circle at 50% 0%, rgba(0, 102, 138, 0.05) 0%, transparent 70%);
+    --global-grid: linear-gradient(rgba(26,26,46,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(26,26,46,0.09) 1px, transparent 1px);
+    --global-grid-mask: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    --global-noise-opacity: 0.35;
+    --global-noise-blend: multiply;
+    --blob-1: rgba(0,102,138,0.08);
+    --blob-2: rgba(217,119,6,0.06);
+    --blob-3: rgba(0,102,138,0.05);
+    --blob-4: rgba(217,119,6,0.04);
+}
+
+.dark {
+    --bg-color: #050505;
+    --text-color: #e2e8f0;
+    --secondary-color: #2dd4bf;
+    --container-low: rgba(10, 10, 10, 0.5);
+    --outline: rgba(255, 255, 255, 0.1);
+    --container-high: rgba(30, 41, 59, 0.5);
+    --primary-color: #f8fafc;
+    --text-muted: #94a3b8;
+    --on-primary: #050505;
+    --accent-color: #c084fc;
+
+    --global-bg: #050505;
+    --global-gradient: radial-gradient(circle at 50% 0%, rgba(30, 30, 45, 0.4) 0%, transparent 70%);
+    --global-grid: linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    --global-grid-mask: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    --global-noise-opacity: 0.12;
+    --global-noise-blend: overlay;
+    --blob-1: rgba(168,85,247,0.15);
+    --blob-2: rgba(45,212,191,0.15);
+    --blob-3: rgba(168,85,247,0.1);
+    --blob-4: rgba(45,212,191,0.1);
+}
+
+html { position: relative; min-height: 100%; }
+#global-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    background-color: var(--global-bg);
+    transition: background-color 0.4s ease;
+}
+.global-bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: var(--global-gradient);
+    transition: background 0.4s ease;
+}
+.global-bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image: var(--global-grid);
+    background-size: 64px 64px;
+    mask-image: var(--global-grid-mask);
+    -webkit-mask-image: var(--global-grid-mask);
+    transition: background-image 0.4s ease;
+}
+.global-bg-noise {
+    position: absolute;
+    inset: 0;
+    opacity: var(--global-noise-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 150px 150px;
+    mix-blend-mode: var(--global-noise-blend);
+}
+.global-bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    will-change: transform;
+    opacity: 0.4;
+    transition: background 0.4s ease;
+}
+.global-bg-blob.blob-1 {
+    width: 70vw; height: 70vw;
+    max-width: 800px; max-height: 800px;
+    background: radial-gradient(circle, var(--blob-1) 0%, transparent 70%);
+    top: -5%; left: -10%;
+    animation: bgBlobFloat 30s ease-in-out infinite alternate;
+}
+.global-bg-blob.blob-2 {
+    width: 60vw; height: 60vw;
+    max-width: 700px; max-height: 700px;
+    background: radial-gradient(circle, var(--blob-2) 0%, transparent 70%);
+    bottom: -5%; right: -10%;
+    animation: bgBlobFloat 25s ease-in-out infinite alternate-reverse 3s;
+}
+.global-bg-blob.blob-3 {
+    width: 50vw; height: 50vw;
+    max-width: 600px; max-height: 600px;
+    background: radial-gradient(circle, var(--blob-3) 0%, transparent 70%);
+    top: 40%; right: 15%;
+    animation: bgBlobFloat 35s ease-in-out infinite alternate 5s;
+}
+.global-bg-blob.blob-4 {
+    width: 40vw; height: 40vw;
+    max-width: 500px; max-height: 500px;
+    background: radial-gradient(circle, var(--blob-4) 0%, transparent 70%);
+    bottom: 40%; left: 15%;
+    animation: bgBlobFloat 28s ease-in-out infinite alternate-reverse 7s;
+}
+@keyframes bgBlobFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(50px, -50px) scale(1.1); }
+    66% { transform: translate(-30px, 30px) scale(0.95); }
+    100% { transform: translate(20px, -20px) scale(1.05); }
+}
+
+/* ── Parallax Layers ── */
 /* ── Particle Canvas ── */
 #particle-canvas {
     position: fixed;
@@ -677,7 +839,17 @@ body:not(.cursor-disabled) .project-card {
 
     @stack('styles')
 </head>
-<body class="bg-surface-container-lowest overflow-hidden">
+<body class="dark bg-background text-on-background min-h-screen">
+    <!-- Global Background Layer — satu kesatuan dari atas ke bawah -->
+    <div id="global-bg" aria-hidden="true">
+        <div class="global-bg-gradient"></div>
+        <div class="global-bg-grid"></div>
+        <div class="global-bg-noise"></div>
+        <div class="global-bg-blob blob-1"></div>
+        <div class="global-bg-blob blob-2"></div>
+        <div class="global-bg-blob blob-3"></div>
+        <div class="global-bg-blob blob-4"></div>
+    </div>
     <!-- Global Initial Loader to wait for fonts -->
     <div id="initial-loader" class="fixed inset-0 z-[99999] bg-surface-container-lowest flex items-center justify-center transition-opacity duration-700 ease-in-out">
         <div class="flex flex-col items-center gap-4">
@@ -687,30 +859,76 @@ body:not(.cursor-disabled) .project-card {
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const loader = document.getElementById('initial-loader');
-            if (!loader) return;
+            // Theme toggle logic
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlEl = document.documentElement;
+            const bodyEl = document.body;
+            const iconLight = document.getElementById('theme-icon-light');
+            const iconDark = document.getElementById('theme-icon-dark');
             
+            // Sync initial state
+            if(localStorage.getItem('theme') === 'light') {
+                bodyEl.classList.remove('dark');
+                iconLight.classList.add('hidden');
+                iconDark.classList.remove('hidden');
+            } else {
+                bodyEl.classList.add('dark');
+                iconDark.classList.add('hidden');
+                iconLight.classList.remove('hidden');
+            }
+            
+            if(themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    bodyEl.classList.toggle('dark');
+                    if (bodyEl.classList.contains('dark')) {
+                        localStorage.setItem('theme', 'dark');
+                        iconDark.classList.add('hidden');
+                        iconLight.classList.remove('hidden');
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        iconLight.classList.add('hidden');
+                        iconDark.classList.remove('hidden');
+                    }
+                });
+            }
+
+            // Prevent scroll while loader is visible
+            document.body.classList.add('overflow-hidden');
+            
+            const loader = document.getElementById('initial-loader');
+            if (!loader) { document.body.classList.remove('overflow-hidden'); return; }
+            
+            var loaderDone = false;
             const hideLoader = () => {
-                if (loader.style.opacity === '0') return;
+                if (loaderDone) return;
+                loaderDone = true;
                 loader.style.opacity = '0';
                 document.body.classList.remove('overflow-hidden');
                 setTimeout(() => loader.remove(), 700);
             };
 
             if (document.fonts && document.fonts.ready) {
-                document.fonts.ready.then(() => {
-                    setTimeout(hideLoader, 150); // slight delay to ensure paint
+                document.fonts.ready.then(function() {
+                    setTimeout(hideLoader, 150);
                 });
             } else {
                 window.addEventListener('load', hideLoader);
             }
             
-            // Fallback timeout in case font loading hangs
             setTimeout(hideLoader, 3500);
+        });
+        
+        // Safety: always re-enable scroll on any navigation/page change
+        document.addEventListener('visibilitychange', function() {
+            document.body.classList.remove('overflow-hidden');
+        });
+        window.addEventListener('beforeunload', function() {
+            document.body.classList.remove('overflow-hidden');
         });
     </script>
     <div class="transition-curtain">
         <div class="curtain-logo">Artha</div>
+        <div class="curtain-accent"></div>
     </div>
 
 <!-- Custom Cursor Elements -->
@@ -747,6 +965,12 @@ body:not(.cursor-disabled) .project-card {
             <span class="jump-text inline-flex gap-[2px]">Capabilities</span>
         </a>
 
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="p-2 -mr-2 rounded-full hover:bg-surface-container-high transition-colors text-on-background flex items-center justify-center">
+            <span id="theme-icon-light" class="material-symbols-outlined text-[20px]">light_mode</span>
+            <span id="theme-icon-dark" class="material-symbols-outlined text-[20px] hidden">dark_mode</span>
+        </button>
+
         <!-- Contact Button dengan Animasi -->
         <button onclick="let el = document.getElementById('contact'); let t = 0; while(el){t+=el.offsetTop; el=el.offsetParent;} window.scrollTo({top:t, behavior:'smooth'});" 
                 class="contact-btn group relative overflow-hidden bg-primary hover:bg-primary/90 text-on-primary px-8 py-3 font-label-md text-label-md rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-md hover:shadow-xl flex items-center gap-2">
@@ -768,8 +992,8 @@ body:not(.cursor-disabled) .project-card {
 // Split text menjadi huruf
 document.querySelectorAll('.jump-text').forEach(text => {
     const letters = text.textContent.split('');
-    text.innerHTML = letters.map(letter => 
-        `<span>${letter === ' ' ? '&nbsp;' : letter}</span>`
+    text.innerHTML = letters.map((letter, i) => 
+        `<span style="--i:${i}">${letter === ' ' ? '&nbsp;' : letter}</span>`
     ).join('');
 });
 
@@ -872,7 +1096,7 @@ window.initNavbar = function() {
 };
 window.initNavbar();
 </script>
-    <main data-barba="wrapper">
+    <main data-barba="wrapper" style="position:relative; z-index:1;">
         @yield('content')
     </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -1041,7 +1265,8 @@ texts.forEach(text => {
             // Clone SVG icons from defs directly (no <use> — more reliable)
             const iconIds = [
                 'icon-folder', 'icon-terminal', 'icon-browser', 'icon-code',
-                'icon-settings', 'icon-palette'
+                'icon-settings', 'icon-palette', 'icon-react', 'icon-vue',
+                'icon-css3', 'icon-laravel', 'icon-node', 'icon-figma'
             ];
             const numIcons = 12;
             const radius = 230;
@@ -1193,6 +1418,16 @@ texts.forEach(text => {
         })();
 
 
+        // Init VanillaTilt for capability cards
+        if (typeof VanillaTilt !== 'undefined') {
+            const capabilityCards = container.querySelectorAll('#capabilities [data-tilt]');
+            if (capabilityCards.length > 0) {
+                VanillaTilt.init(capabilityCards, {
+                    max: 4, speed: 300, glare: true, "max-glare": 0.1
+                });
+            }
+        }
+
         // Scroll down button - only show when at top of page
         const scrollBtn = container.querySelector('#scroll-down');
         if (scrollBtn) {
@@ -1286,79 +1521,33 @@ texts.forEach(text => {
             setTimeout(clearCssFn, 2500);
         }
 
-        // ── Multi-Layer Cursor Parallax System ──
-        if (heroSection) {
-            const parallaxLayers = heroSection.querySelectorAll('[data-parallax-layer]');
-            const layerData = [];
-
-            parallaxLayers.forEach(el => {
-                const speed = parseFloat(el.dataset.parallaxLayer) || 0.02;
-                el.style.willChange = 'transform';
-                layerData.push({ el, speed, currentX: 0, currentY: 0, targetX: 0, targetY: 0 });
-            });
-
-            // Smooth tilt values for the content wrapper
+        // ── Hero 3D Tilt Effect (only tilt, layers handled globally) ──
+        if (heroSection && heroContent) {
             let tiltTargetX = 0, tiltTargetY = 0;
             let tiltCurrentX = 0, tiltCurrentY = 0;
-            let heroMouseActive = false;
 
             heroSection.addEventListener('mousemove', (e) => {
                 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-                heroMouseActive = true;
                 const { left, top, width, height } = heroSection.getBoundingClientRect();
-                const normalX = ((e.clientX - left) / width - 0.5) * 2;  // -1 to 1
-                const normalY = ((e.clientY - top) / height - 0.5) * 2;  // -1 to 1
-
-                // Set parallax targets for each layer
-                layerData.forEach(layer => {
-                    layer.targetX = normalX * layer.speed * width;
-                    layer.targetY = normalY * layer.speed * height;
-                });
-
-                // Set tilt target (subtle 3D perspective on content)
-                if (heroContent) {
-                    tiltTargetX = normalY * -6;   // rotateX based on Y
-                    tiltTargetY = normalX * 6;    // rotateY based on X
-                }
+                const normalX = ((e.clientX - left) / width - 0.5) * 2;
+                const normalY = ((e.clientY - top) / height - 0.5) * 2;
+                tiltTargetX = normalY * -6;
+                tiltTargetY = normalX * 6;
             });
 
             heroSection.addEventListener('mouseleave', () => {
-                heroMouseActive = false;
-                // Spring back to center
-                layerData.forEach(layer => {
-                    layer.targetX = 0;
-                    layer.targetY = 0;
-                });
                 tiltTargetX = 0;
                 tiltTargetY = 0;
             });
 
-            // Smooth animation loop with spring interpolation
-            let heroParallaxRAF;
-            function animateHeroParallax() {
-                const lerp = 0.06; // Smooth spring factor
-
-                layerData.forEach(layer => {
-                    layer.currentX += (layer.targetX - layer.currentX) * lerp;
-                    layer.currentY += (layer.targetY - layer.currentY) * lerp;
-
-                    // Snap to zero when close enough to avoid micro-jitter
-                    if (Math.abs(layer.currentX) < 0.01 && Math.abs(layer.targetX) === 0) layer.currentX = 0;
-                    if (Math.abs(layer.currentY) < 0.01 && Math.abs(layer.targetY) === 0) layer.currentY = 0;
-
-                    layer.el.style.transform = `translate3d(${layer.currentX}px, ${layer.currentY}px, 0)`;
-                });
-
-                // Tilt on content
-                if (heroContent) {
-                    tiltCurrentX += (tiltTargetX - tiltCurrentX) * lerp;
-                    tiltCurrentY += (tiltTargetY - tiltCurrentY) * lerp;
-                    heroContent.style.transform = `perspective(1000px) rotateX(${tiltCurrentX}deg) rotateY(${tiltCurrentY}deg) scale3d(1.02, 1.02, 1.02)`;
-                }
-
-                heroParallaxRAF = requestAnimationFrame(animateHeroParallax);
+            function animateHeroTilt() {
+                const lerp = 0.06;
+                tiltCurrentX += (tiltTargetX - tiltCurrentX) * lerp;
+                tiltCurrentY += (tiltTargetY - tiltCurrentY) * lerp;
+                heroContent.style.transform = `perspective(1000px) rotateX(${tiltCurrentX}deg) rotateY(${tiltCurrentY}deg) scale3d(1.02, 1.02, 1.02)`;
+                requestAnimationFrame(animateHeroTilt);
             }
-            animateHeroParallax();
+            animateHeroTilt();
         }
 
         // --- Interactive Title Animation on Mouse Move ---
@@ -1537,16 +1726,7 @@ texts.forEach(text => {
 
         const interstitialShape = container.querySelector('#interstitial-shape');
         if (interstitialShape) {
-            gsap.fromTo(container.querySelector("#blob-shape"),
-                { y: "50vh", scale: 0.5, opacity: 0 },
-                { y: "0vh", scale: 1, opacity: 1, ease: "power1.out",
-                  scrollTrigger: { trigger: interstitialShape, start: "top 80%", end: "center center", scrub: 1 }
-                }
-            );
-            gsap.from(container.querySelector("#interstitial-content"), {
-                opacity: 0, y: 50, ease: "power2.out", duration: 1,
-                scrollTrigger: { trigger: interstitialShape, start: "top 70%", toggleActions: "play none none reverse" }
-            });
+            // Animasi untuk teks dan blob shape dihapus agar selalu muncul
         }
         };
 
@@ -1592,9 +1772,15 @@ texts.forEach(text => {
         } else {
             window.initHomeScripts(document);
             window.initProjectsScripts(document);
+            // Capability cards tilt
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll('#capabilities [data-tilt]'), {
+                    max: 4, speed: 300, glare: true, "max-glare": 0.1
+                });
+            }
         }
 
-                        // Barba.js page transitions
+                        // ── Barba.js Page Transitions ──
         if (typeof barba !== 'undefined') {
             barba.init({
                 sync: false,
@@ -1606,12 +1792,10 @@ texts.forEach(text => {
                         var done = this.async();
                         window.barbaTransitioning = true;
 
-                        // Save scroll position of current page
                         if (data.current.url.path) {
                             sessionStorage.setItem('scroll_' + data.current.url.path, window.scrollY);
                         }
 
-                        // Set flag: are we returning to home from a project page?
                         window._returnToProjects = (
                             data.next.namespace === 'home' &&
                             (data.current.namespace === 'project-detail' || data.current.namespace === 'projects')
@@ -1623,30 +1807,51 @@ texts.forEach(text => {
 
                         var curtain = document.querySelector('.transition-curtain');
                         var logo = curtain.querySelector('.curtain-logo');
+                        var accent = curtain.querySelector('.curtain-accent');
+                        var container = data.current.container;
+
+                        curtain.classList.add('is-active');
 
                         var tl = gsap.timeline({ onComplete: () => {
-                            if (data.current.container) {
-                                gsap.set(data.current.container, { opacity: 0, display: 'none' });
+                            if (container) {
+                                gsap.set(container, { opacity: 0, display: 'none', clearProps: 'transform filter' });
                             }
                             if (data.next.namespace === 'project-detail' || data.next.namespace === 'projects') {
                                 gsap.set('#global-navbar', { display: 'none', opacity: 0, y: '-100%' });
                             } else if (data.next.namespace === 'home') {
                                 gsap.set('#global-navbar', { display: 'block' });
-                                gsap.to('#global-navbar', { opacity: 1, y: '0%', duration: 0.5, delay: 0.5 });
+                                gsap.to('#global-navbar', { opacity: 1, y: '0%', duration: 0.5, delay: 0.4 });
                             }
                             done();
                         }});
-                        tl.to(curtain, { y: '0%', duration: 0.7, ease: 'power4.inOut' })
-                          .to(logo, { opacity: 1, duration: 0.3 }, '-=0.2');
+
+                        // Phase 1: Current page compresses + blurs
+                        tl.to(container, {
+                            scale: 0.93, opacity: 0.4, filter: 'blur(8px)',
+                            duration: 0.4, ease: 'power2.in',
+                            transformOrigin: 'center center'
+                        }, 0);
+
+                        // Phase 2: Curtain drops with dynamic ease
+                        tl.to(curtain, {
+                            y: '0%', duration: 0.75, ease: 'power3.inOut'
+                        }, 0.15);
+
+                        // Phase 3: Accent bar sweeps in
+                        tl.to(accent, {
+                            scaleX: 1, duration: 0.5, ease: 'power3.out'
+                        }, '-=0.35');
+
+                        // Phase 4: Logo 3D flips in
+                        tl.set(logo, { opacity: 1, scale: 0.2, rotationX: -80 });
+                        tl.to(logo, {
+                            scale: 1, rotationX: 0, duration: 0.6, ease: 'back.out(2.5)'
+                        }, '-=0.15');
                     },
 
                     // ── BEFORE ENTER ─────────────────────────────────────────
-                    // Fires AFTER leave completes & new container is in the DOM,
-                    // but BEFORE enter starts. The curtain is STILL fully covering —
-                    // perfect timing to set scroll position without user seeing anything.
                     beforeEnter(data) {
                         if (window._returnToProjects) {
-                            // Scroll to #projects section (invisible — curtain covers screen)
                             const el = data.next.container.querySelector('#projects');
                             if (el) {
                                 let top = 0, node = el;
@@ -1655,16 +1860,12 @@ texts.forEach(text => {
                                     node = node.offsetParent;
                                 }
                                 window.scrollTo(0, top);
-                                document.documentElement.scrollTop = top;
-                                document.body.scrollTop = top;
                             }
                             window._returnToProjects = false;
                         } else if (data.next.namespace === 'home') {
-                            // Restore previous scroll position on home page
                             const saved = parseInt(sessionStorage.getItem('scroll_' + data.next.url.path)) || 0;
                             window.scrollTo(0, saved);
                         } else {
-                            // Sub-pages always start at top
                             window.scrollTo(0, 0);
                         }
                     },
@@ -1673,26 +1874,60 @@ texts.forEach(text => {
                     async enter(data) {
                         var done = this.async();
 
-                        // Scroll was already set in beforeEnter — do NOT override it here.
-                        if(data.next.container) data.next.container.style.opacity = '0';
+                        if (data.next.container) {
+                            gsap.set(data.next.container, { opacity: 0 });
+                        }
 
                         var curtain = document.querySelector('.transition-curtain');
                         var logo = curtain.querySelector('.curtain-logo');
+                        var accent = curtain.querySelector('.curtain-accent');
+                        var nextContainer = data.next.container;
 
                         var tl = gsap.timeline({ onComplete: done });
-                        tl.to(logo, { opacity: 0, duration: 0.3 })
-                          .to(curtain, { y: '-100%', duration: 0.7, ease: 'power4.inOut' }, '+=0.1')
-                          .set(curtain, { y: '100%' });
 
-                        if(data.next.container) gsap.to(data.next.container, { opacity: 1, duration: 0.1 });
+                        // Phase 1: Logo zooms out + fades
+                        tl.to(logo, {
+                            scale: 1.8, opacity: 0, duration: 0.35, ease: 'power2.in'
+                        }, 0);
+
+                        // Phase 2: Accent bar retracts
+                        tl.to(accent, {
+                            scaleX: 0, duration: 0.3, ease: 'power2.in'
+                        }, 0);
+
+                        // Phase 3: Curtain lifts with dynamic overshoot
+                        tl.to(curtain, {
+                            y: '-120%', duration: 0.85, ease: 'power4.inOut'
+                        }, 0.2);
+
+                        tl.set(curtain, { y: '100%', clearProps: 'all' }, '+=0.05');
+                        curtain.classList.remove('is-active');
+
+                        // Phase 4: New page content staggers in
+                        if (nextContainer) {
+                            var content = nextContainer.querySelectorAll(
+                                'section[id] > *:not(.desktop-window), ' +
+                                '.hero-main-content, .hero-content-inner, ' +
+                                '.project-hero > *, .gallery-item, .project-content, .project-meta, .features, .related-section'
+                            );
+                            var contentArr = gsap.utils.toArray(content).filter(el => {
+                                return !el.closest('.curtain') && el.offsetParent !== null;
+                            });
+                            if (contentArr.length > 0) {
+                                gsap.set(nextContainer, { opacity: 1 });
+                                gsap.set(contentArr, { y: 30, opacity: 0 });
+                                tl.to(contentArr, {
+                                    y: 0, opacity: 1, duration: 0.6, stagger: 0.035, ease: 'power3.out'
+                                }, '-=0.3');
+                            } else {
+                                tl.set(nextContainer, { opacity: 1 }, '-=0.1');
+                            }
+                        }
 
                         setTimeout(() => {
                             if (data.next.namespace === 'home') {
-                                // Ensure project cards are visible before initHomeScripts
-                                // sets up its own ScrollTrigger animation
                                 const cards = data.next.container.querySelectorAll('.project-card');
                                 gsap.set(cards, { clearProps: 'all' });
-
                                 if (typeof window.initHomeScripts === 'function') window.initHomeScripts(data.next.container);
                                 if (typeof window.initNavbar === 'function') window.initNavbar();
                                 if (typeof window.initEffects === 'function') window.initEffects(data.next.container);
@@ -1701,17 +1936,13 @@ texts.forEach(text => {
                             } else if (data.next.namespace === 'project-detail') {
                                 if (typeof window.animateIn === 'function') {
                                     window.animateIn();
-                                } else {
-                                    gsap.from(data.next.container.querySelectorAll('.project-hero > *, .gallery-item, .project-content, .project-meta, .features, .related-section'), {
-                                        y: 40, opacity: 0, duration: 0.8, stagger: 0.05, ease: 'power3.out'
-                                    });
                                 }
                             }
 
                             if (barba.cache && typeof barba.cache.clear === 'function') {
                                 barba.cache.clear();
                             }
-                        }, 100);
+                        }, 150);
                     }
                 }]
             });
@@ -2033,29 +2264,8 @@ window.initEffects = function(container) {
 // Run on initial load
 window.initEffects();
 
-// ── 10. Parallax Mouse Layers (Ambient Blobs) ──
-(function() {
-    document.querySelectorAll('[data-parallax]').forEach(el => {
-        const speed = parseFloat(el.dataset.parallax) || 0.05;
-        let px = 0, py = 0;
-        let currentPX = 0, currentPY = 0;
-        el.style.willChange = 'transform';
-        window.addEventListener('mousemove', e => {
-            const rect = el.parentElement ? el.parentElement.getBoundingClientRect() : { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            px = (e.clientX - centerX) * speed * 3;
-            py = (e.clientY - centerY) * speed * 3;
-        });
-        function updateParallax() {
-            currentPX += (px - currentPX) * 0.08;
-            currentPY += (py - currentPY) * 0.08;
-            el.style.transform = `translate3d(${currentPX}px, ${currentPY}px, 0)`;
-            requestAnimationFrame(updateParallax);
-        }
-        updateParallax();
-    });
-})();
+// ── 10. (Parallax effects removed) ──
+// ── 11. (Parallax content layers removed) ──
 </script>
     @stack('scripts')
 </body>

@@ -10,7 +10,7 @@ class PageController extends Controller
 {
     public function welcome()
     {
-        $projects = Project::all();
+        $projects = Project::with('skills')->get();
         $devSkills = Skill::where('type', 'development')->get();
         $toolSkills = Skill::where('type', 'design_tool')->get();
 
@@ -19,18 +19,18 @@ class PageController extends Controller
 
     public function projects()
     {
-        $projects = Project::all();
+        $projects = Project::with('skills')->get();
         return view('projects', compact('projects'));
     }
 
     public function projectDetail($id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::with('skills')->findOrFail($id);
 
         $related = collect();
         $projectsCount = Project::count();
         if ($projectsCount > 1) {
-            $related = Project::where('id', '!=', $id)->inRandomOrder()->limit(min(3, $projectsCount - 1))->get();
+            $related = Project::with('skills')->where('id', '!=', $id)->inRandomOrder()->limit(min(3, $projectsCount - 1))->get();
         }
 
         return view('project-detail', compact('project', 'related'));

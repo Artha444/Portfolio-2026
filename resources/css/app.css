@@ -7,3 +7,34 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Style untuk grid overlay di halaman proyek */
+.section-grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(to right, rgba(0, 102, 138, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 102, 138, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
+}
+
+/* Animasi untuk daftar kemampuan */
+.capability-item {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.is-inview .capability-item {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Menambahkan delay untuk setiap item */
+.is-inview .capability-item:nth-child(2) { transition-delay: 0.1s; }
+.is-inview .capability-item:nth-child(3) { transition-delay: 0.2s; }
+.is-inview .capability-item:nth-child(4) { transition-delay: 0.3s; }

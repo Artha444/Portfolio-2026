@@ -19,13 +19,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
-    Route::get('/', function() { 
+    Route::get('/', function () {
         $projectCount = \App\Models\Project::count();
         $skillCount = \App\Models\Skill::count();
         $unreadMessages = \App\Models\Message::where('is_read', false)->count();
-        return view('admin.dashboard', compact('projectCount', 'skillCount', 'unreadMessages')); 
+        return view('admin.dashboard', compact('projectCount', 'skillCount', 'unreadMessages'));
     })->name('dashboard');
     Route::resource('projects', ProjectController::class);
     Route::resource('skills', SkillController::class);
+    Route::delete('projects/{project}/image', [ProjectController::class, 'deleteImage'])->name('projects.image.delete');
     Route::resource('messages', MessageController::class)->only(['index', 'show', 'destroy']);
 });

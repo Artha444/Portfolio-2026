@@ -17,7 +17,7 @@
 <div class="bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 rounded-2xl overflow-hidden p-6 md:p-8 max-w-4xl">
     <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2" for="title">Project Title</label>
@@ -70,6 +70,8 @@
             <input class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all sm:text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" id="images" name="images[]" type="file" multiple required accept="image/*">
             @error('images') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
             @error('images.*') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+            {{-- Container untuk pratinjau gambar --}}
+            <div id="image-preview-container" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4"></div>
         </div>
 
         <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100 mt-6">
@@ -82,4 +84,53 @@
         </div>
     </form>
 </div>
+
+@push('scripts')
+<script>
+    document.getElementById('images').addEventListener('change', function(event) {
+        const previewContainer = document.getElementById('image-preview-container');
+        previewContainer.innerHTML = ''; // Kosongkan pratinjau sebelumnya
+        const files = event.target.files;
+
+        if (files) {
+            Array.from(files).forEach((file, index) => {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Buat wrapper untuk setiap gambar dan tombol radio
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'relative border-2 border-slate-200 p-2 rounded-lg';
+
+                    // Buat elemen gambar
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'w-full h-auto object-cover rounded-md aspect-video';
+
+                    // Buat label untuk tombol radio
+                    const radioLabel = document.createElement('label');
+                    radioLabel.className = 'absolute top-2 right-2 flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full text-xs cursor-pointer border border-slate-300 hover:bg-indigo-50';
+
+                    // Buat tombol radio
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'cover_image_index'; // Ini akan dikirim ke controller
+                    radio.value = index;
+                    radio.className = 'w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500';
+                    if (index === 0) {
+                        radio.checked = true; // Otomatis pilih gambar pertama sebagai default
+                    }
+
+                    radioLabel.appendChild(radio);
+                    radioLabel.append(' Cover'); // Tambahkan teks "Cover"
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(radioLabel);
+                    previewContainer.appendChild(wrapper);
+                }
+
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+</script>
+@endpush
 @endsection

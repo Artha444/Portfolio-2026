@@ -324,12 +324,10 @@
         <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: repeating-radial-gradient(ellipse at center, transparent, transparent 3px, #000 3px, #000 5px); background-size: 30px 60px;"></div>
 
         @php
-            // Ambil berdasarkan board_position dari database, fallback ke ID 1 atau proyek pertama
             $centerProject = $projects->firstWhere('board_position', 'center') 
                              ?? $projects->firstWhere('id', 1) 
                              ?? $projects->first();
             
-            // Ambil proyek untuk posisi di sudut (corner)
             $cornerProjectsArray = [
                 $projects->firstWhere('board_position', 'top_left'),
                 $projects->firstWhere('board_position', 'top_right'),
@@ -337,34 +335,30 @@
                 $projects->firstWhere('board_position', 'bottom_right')
             ];
             
-            // Siapkan proyek cadangan jika ada posisi yang belum diisi via admin
             $usedIds = collect($cornerProjectsArray)->filter()->pluck('id')->push($centerProject?->id)->toArray();
             $unassignedProjects = $projects->whereNotIn('id', $usedIds)->values();
             
-            // Isi posisi kosong dengan proyek cadangan
             foreach ($cornerProjectsArray as $index => $cp) {
                 if (!$cp && $unassignedProjects->isNotEmpty()) {
                     $cornerProjectsArray[$index] = $unassignedProjects->shift();
                 }
             }
             
-            // Jadikan collection kembali
             $cornerProjects = collect($cornerProjectsArray)->filter();
             
             $cornerPositions = [
-                'top-6 left-6 -rotate-[4deg]', // Kiri Atas
-                'top-6 right-6 rotate-[3deg]', // Kanan Atas
-                'bottom-6 left-6 rotate-[5deg]', // Kiri Bawah
-                'bottom-6 right-6 -rotate-[3deg]' // Kanan Bawah
+                'top-6 left-6 -rotate-[4deg]',
+                'top-6 right-6 rotate-[3deg]',
+                'bottom-6 left-6 rotate-[5deg]',
+                'bottom-6 right-6 -rotate-[3deg]'
             ];
         @endphp
 
         <!-- Center Project (Center) -->
         @if($centerProject)
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[38%] z-20 transition-transform duration-500 hover:scale-[1.05] hover:z-30">
-            <a href="/project/{{ $centerProject->id }}" class="group block no-underline outline-none">
+            <button type="button" onclick="openFlipModal(event, {{ $centerProject->id }})" class="group block w-full text-left no-underline outline-none cursor-pointer">
                 <div class="desktop-window w-full bg-white relative shadow-[0_15px_40px_rgba(0,0,0,0.6)]">
-                    <!-- Tape effect -->
                     <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-7 bg-white/40 backdrop-blur-md border border-white/60 shadow-sm rotate-[2deg] z-10" style="clip-path: polygon(0 5%, 100% 0, 95% 95%, 5% 100%);"></div>
                     
                     <div class="window-titlebar bg-[#f7f5f0] border-b border-[#e0dbd0] py-2 px-4">
@@ -375,8 +369,9 @@
                     </div>
                     <div class="p-4 pb-5">
                         <div class="relative w-full aspect-video rounded overflow-hidden bg-[#f0ece4] mb-4 border border-[#e0dbd0]">
-                            @if(!empty($centerProject->images) && isset($centerProject->images[0]))
-                                <img src="{{ asset('storage/' . $centerProject->images[0]) }}" alt="{{ $centerProject->title }}" class="w-full h-full object-cover">
+                            @php $coverImage = $centerProject->cover_image ?? ($centerProject->images[0] ?? null); @endphp
+                            @if($coverImage)
+                                <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $centerProject->title }}" class="w-full h-full object-cover">
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-[#8b8680]/30 font-mono text-sm">[ NO_PREVIEW ]</div>
                             @endif
@@ -385,16 +380,15 @@
                         <p class="font-mono text-[11px] text-[#8b8680] uppercase tracking-wider truncate">{{ $centerProject->category }}</p>
                     </div>
                 </div>
-            </a>
+            </button>
         </div>
         @endif
 
         <!-- Corner Projects -->
         @foreach($cornerProjects as $index => $p)
         <div class="absolute {{ $cornerPositions[$index] }} w-[24%] z-10 transition-transform duration-500 hover:scale-[1.08] hover:rotate-0 hover:z-30">
-            <a href="/project/{{ $p->id }}" class="group block no-underline outline-none">
+            <button type="button" onclick="openFlipModal(event, {{ $p->id }})" class="group block w-full text-left no-underline outline-none cursor-pointer">
                 <div class="desktop-window w-full bg-white relative shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                    <!-- Tape effect -->
                     <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-14 h-5 bg-white/40 backdrop-blur-md border border-white/60 shadow-sm rotate-[-3deg] z-10" style="clip-path: polygon(0 5%, 100% 0, 95% 95%, 5% 100%);"></div>
                     
                     <div class="window-titlebar bg-[#f7f5f0] border-b border-[#e0dbd0] py-1.5 px-3">
@@ -405,8 +399,9 @@
                     </div>
                     <div class="p-3 pb-4">
                         <div class="relative w-full aspect-video rounded-sm overflow-hidden bg-[#f0ece4] mb-3 border border-[#e0dbd0]">
-                            @if(!empty($p->images) && isset($p->images[0]))
-                                <img src="{{ asset('storage/' . $p->images[0]) }}" alt="{{ $p->title }}" class="w-full h-full object-cover">
+                            @php $coverImage = $p->cover_image ?? ($p->images[0] ?? null); @endphp
+                            @if($coverImage)
+                                <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $p->title }}" class="w-full h-full object-cover">
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-[#8b8680]/30 font-mono text-[10px]">[ NO_PREVIEW ]</div>
                             @endif
@@ -415,7 +410,7 @@
                         <p class="font-mono text-[9px] text-[#8b8680] uppercase tracking-wider truncate">{{ $p->category }}</p>
                     </div>
                 </div>
-            </a>
+            </button>
         </div>
         @endforeach
     </div>
@@ -423,59 +418,64 @@
     <!-- Mobile Grid (Hidden on Desktop) -->
     <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:hidden">
         @php
-            // Mobile shows the 5 projects in a standard grid
             $mobileDisplay = collect();
             if(isset($centerProject)) $mobileDisplay->push($centerProject);
             if(isset($cornerProjects)) $mobileDisplay = $mobileDisplay->merge($cornerProjects);
-            
             $rotations = ['-rotate-2', 'rotate-2', 'rotate-1', '-rotate-1', 'rotate-2'];
+            $mobilePaperColors = ['#fef9f0', '#f0f7ff', '#fff9f0', '#f7fff0', '#fff0f7'];
+            $mobilePinColors = ['bg-amber-400', 'bg-blue-400', 'bg-orange-400', 'bg-green-400', 'bg-pink-400'];
         @endphp
         @foreach($mobileDisplay as $index => $p)
-        @php
-            $rotationClass = $rotations[$index % 5];
-        @endphp
-        <a href="/project/{{ $p->id }}" class="group block no-underline outline-none">
-            <div class="desktop-window w-full bg-white transform transition-all duration-500 hover:scale-[1.03] hover:rotate-0 hover:z-20 hover:shadow-[0_20px_50px_rgba(26,26,46,0.12)] {{ $rotationClass }} relative">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6 bg-white/40 backdrop-blur-md border border-white/60 shadow-sm rotate-[-2deg] z-10" style="clip-path: polygon(0 5%, 100% 0, 95% 95%, 5% 100%);"></div>
-                
-                <div class="window-titlebar bg-[#f7f5f0] border-b border-[#e0dbd0]">
-                    <span class="window-dot dot-red"></span>
-                    <span class="window-dot dot-yellow"></span>
-                    <span class="window-dot dot-green"></span>
-                    <span class="window-title-text text-[#8b8680] truncate max-w-[200px]">/projects/{{ Str::slug($p->title) }}.exe</span>
+        @php $rotationClass = $rotations[$index % 5]; @endphp
+        <button type="button" onclick="openFlipModal(event, {{ $p->id }})" class="project-card-btn group block w-full text-left no-underline outline-none cursor-pointer">
+            <div class="w-full relative transform transition-all duration-500 hover:scale-[1.03] hover:rotate-0 hover:z-20 shadow-[2px_5px_15px_rgba(0,0,0,0.1)] p-4 md:p-6 pb-6 {{ $rotationClass }}" style="background-color: {{ $mobilePaperColors[$index % 5] }};">
+                <!-- Pushpin -->
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full shadow-[2px_3px_4px_rgba(0,0,0,0.3)] z-10 {{ $mobilePinColors[$index % 5] }} flex items-start justify-start p-[3px]">
+                    <div class="w-2 h-2 rounded-full bg-white/40"></div>
                 </div>
-                
-                <div class="p-4 md:p-6 pb-6">
-                    <div class="relative w-full aspect-video rounded-lg overflow-hidden bg-[#f0ece4] mb-5 border border-[#e0dbd0] shadow-inner group-hover:shadow-md transition-shadow">
-                        @if(!empty($p->images) && isset($p->images[0]))
-                            <img src="{{ asset('storage/' . $p->images[0]) }}" alt="{{ $p->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center text-[#8b8680]/30 font-mono text-xl">
-                                [ NO_PREVIEW ]
-                            </div>
+
+                <div class="relative w-full aspect-video rounded-md overflow-hidden mb-5 border border-black/5 shadow-sm bg-white group-hover:shadow-md transition-shadow">
+                    @php $coverImage = $p->cover_image ?? ($p->images[0] ?? null); @endphp
+                    @if($coverImage)
+                    <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $p->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    @else
+                    <div class="w-full h-full flex items-center justify-center text-[#8b8680]/50 font-mono text-xl">[ NO_PREVIEW ]</div>
+                    @endif
+                </div>
+
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <h3 class="font-neue text-2xl font-bold text-slate-800 mb-2 tracking-tight">{{ $p->title }}</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                            <p class="font-mono text-xs text-slate-600 uppercase tracking-wider">{{ $p->category }}</p>
+                        </div>
+                        @if($p->skills->count())
+                        <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
+                            @foreach($p->skills->take(2) as $skill)
+                            <span style="font-size: 10px; font-weight: 500; padding: 3px 8px; background: rgba(0, 102, 138, 0.1); color: #00668a; border-radius: 10px; white-space: nowrap;">{{ $skill->name }}</span>
+                            @endforeach
+                            @if($p->skills->count() > 2)
+                            <span style="font-size: 10px; font-weight: 500; padding: 3px 8px; background: rgba(0, 0, 0, 0.05); color: #8b8680; border-radius: 10px;">+{{ $p->skills->count() - 2 }}</span>
+                            @endif
+                        </div>
                         @endif
                     </div>
-                    
-                    <div class="flex items-start justify-between gap-4">
-                        <div>
-                            <h3 class="font-neue text-2xl font-bold text-primary mb-2 tracking-tight group-hover:text-[#d97706] transition-colors">{{ $p->title }}</h3>
-                            <div class="flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 rounded-full bg-[#d97706] animate-pulse"></span>
-                                <p class="font-mono text-xs text-[#8b8680] uppercase tracking-wider">{{ $p->category }}</p>
-                            </div>
-                        </div>
-                        <div class="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center bg-[#f7f5f0] group-hover:bg-[#d97706] group-hover:border-[#d97706] group-hover:text-white transition-all duration-300 transform group-hover:rotate-45">
-                            <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
-                        </div>
+                    <div class="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center bg-white/50 text-slate-600 group-hover:bg-black group-hover:border-black group-hover:text-white transition-all duration-300 transform group-hover:rotate-45 shadow-sm">
+                        <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
                     </div>
                 </div>
+
+                <!-- Folded Corner Effect -->
+                <div class="absolute bottom-0 right-0 w-8 h-8" style="background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.1) 100%);"></div>
             </div>
-        </a>
+        </button>
         @endforeach
     </div>
 </section>
+
 <!-- Capabilities Section -->
-<section class="py-32 max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16" id="capabilities">
+<section class="py-24 md:py-32 max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16" id="capabilities">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
         <div>
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/5 border border-secondary/20 mb-6">
@@ -492,7 +492,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Card 1 -->
+        <!-- Card 1: Development -->
         <div class="group bg-white p-8 md:p-10 rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-outline-variant/20 hover:border-primary/10 transition-all duration-500 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)]">
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-14 h-14 rounded-2xl bg-[#e6f0fa] flex items-center justify-center text-[#00668a] group-hover:scale-110 transition-transform duration-500">
@@ -500,34 +500,26 @@
                 </div>
                 <h3 class="font-neue text-3xl font-black text-primary">Development</h3>
             </div>
-            
             <div class="flex flex-col gap-3">
+                @forelse($devSkills as $skill)
                 <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-[#e6f0fa]/60 transition-colors duration-300 border border-transparent hover:border-[#00668a]/10 cursor-default">
-                    <span class="font-bold text-primary text-lg">HTML & CSS</span>
-                    <span class="material-symbols-outlined text-on-surface-variant/30">html</span>
-                </div>
-                <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-[#e6f0fa]/60 transition-colors duration-300 border border-transparent hover:border-[#00668a]/10 cursor-default">
-                    <span class="font-bold text-primary text-lg">PHP & MySQL</span>
-                    <span class="material-symbols-outlined text-on-surface-variant/30">database</span>
-                </div>
-                <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-red-50 transition-colors duration-300 border border-transparent hover:border-red-100 cursor-default">
+                    @if($skill->color_class)
                     <div class="flex items-center gap-3">
-                        <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
-                        <span class="font-bold text-primary text-lg">Laravel Framework</span>
+                        <span class="w-2.5 h-2.5 rounded-full {{ $skill->color_class }}"></span>
+                        <span class="font-bold text-primary text-lg">{{ $skill->name }}</span>
                     </div>
-                    <span class="material-symbols-outlined text-red-500/30">terminal</span>
+                    @else
+                    <span class="font-bold text-primary text-lg">{{ $skill->name }}</span>
+                    @endif
+                    <span class="material-symbols-outlined text-on-surface-variant/30">{{ $skill->icon }}</span>
                 </div>
-                <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-yellow-50 transition-colors duration-300 border border-transparent hover:border-yellow-200 cursor-default">
-                    <div class="flex items-center gap-3">
-                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
-                        <span class="font-bold text-primary text-lg">JavaScript Dasar</span>
-                    </div>
-                    <span class="material-symbols-outlined text-yellow-500/30">javascript</span>
-                </div>
+                @empty
+                <p class="text-on-surface-variant/50 p-4">No development skills listed yet.</p>
+                @endforelse
             </div>
         </div>
 
-        <!-- Card 2 -->
+        <!-- Card 2: Design & Tools -->
         <div class="group bg-white p-8 md:p-10 rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-outline-variant/20 hover:border-primary/10 transition-all duration-500 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)]">
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform duration-500">
@@ -535,30 +527,22 @@
                 </div>
                 <h3 class="font-neue text-3xl font-black text-primary">Design & Tools</h3>
             </div>
-            
             <div class="flex flex-col gap-3">
+                @forelse($toolSkills as $skill)
                 <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-gray-100 transition-colors duration-300 border border-transparent hover:border-gray-200 cursor-default">
-                    <span class="font-bold text-primary text-lg">Git & GitHub</span>
-                    <span class="material-symbols-outlined text-on-surface-variant/30">fork_right</span>
-                </div>
-                <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-blue-50 transition-colors duration-300 border border-transparent hover:border-blue-200 cursor-default">
+                    @if($skill->color_class)
                     <div class="flex items-center gap-3">
-                        <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                        <span class="font-bold text-primary text-lg">Visual Studio Code</span>
+                        <span class="w-2.5 h-2.5 rounded-full {{ $skill->color_class }}"></span>
+                        <span class="font-bold text-primary text-lg">{{ $skill->name }}</span>
                     </div>
-                    <span class="material-symbols-outlined text-blue-500/30">code</span>
+                    @else
+                    <span class="font-bold text-primary text-lg">{{ $skill->name }}</span>
+                    @endif
+                    <span class="material-symbols-outlined text-on-surface-variant/30">{{ $skill->icon }}</span>
                 </div>
-                <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-orange-50 transition-colors duration-300 border border-transparent hover:border-orange-200 cursor-default">
-                    <span class="font-bold text-primary text-lg">XAMPP</span>
-                    <span class="material-symbols-outlined text-orange-500/30">dns</span>
-                </div>
-                <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-purple-50 transition-colors duration-300 border border-transparent hover:border-purple-200 cursor-default">
-                    <div class="flex items-center gap-3">
-                        <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
-                        <span class="font-bold text-primary text-lg">Figma Dasar</span>
-                    </div>
-                    <span class="material-symbols-outlined text-purple-500/30">draw</span>
-                </div>
+                @empty
+                <p class="text-on-surface-variant/50 p-4">No design & tool skills listed yet.</p>
+                @endforelse
             </div>
         </div>
     </div>
@@ -677,4 +661,337 @@
 
 </div>
 </div>
+
+{{-- ═══════════════════════════════════════════════════
+     PROJECT DETAIL MODAL (FLIP ANIMATION)
+═══════════════════════════════════════════════════ --}}
+
+{{-- Data JSON semua proyek untuk JS --}}
+<script id="projects-json" type="application/json">
+    {!! json_encode($projects->map(function($p) {
+        return [
+            'id'          => $p->id,
+            'title'       => $p->title,
+            'category'    => $p->category,
+            'description' => $p->description,
+            'cover_image' => $p->cover_image,
+            'images'      => $p->images ?? [],
+            'demo_link'   => $p->demo_link,
+            'github_link' => $p->github_link,
+            'skills'      => $p->skills->pluck('name'),
+        ];
+    })->keyBy('id')) !!}
+</script>
+
+<!-- Backdrop -->
+<div id="pm-backdrop"
+    style="position:fixed;inset:0;z-index:99990;
+           background:radial-gradient(ellipse at center, rgba(58,42,26,0.55) 0%, rgba(20,14,9,0.78) 100%);
+           backdrop-filter:blur(8px);
+           opacity:0;pointer-events:none;transition:opacity 0.4s ease;"
+    onclick="pmClose()"></div>
+
+<!-- Modal container -->
+<div id="pm-modal"
+    style="position:fixed;z-index:99991;overflow:hidden;display:flex;flex-direction:column;
+           pointer-events:none;opacity:0;background:#F4ECD8;
+           border-radius:6px;
+           border:1px solid rgba(60,40,20,0.14);
+           box-shadow:inset 0 1px 0 rgba(255,255,255,0.35),0 12px 28px rgba(40,25,10,0.28),0 40px 90px rgba(30,18,8,0.4);
+           will-change:transform,opacity,width,height,top,left,border-radius;">
+
+    <!-- Grain texture -->
+    <div aria-hidden="true"
+        style="position:absolute;inset:0;pointer-events:none;z-index:0;opacity:0.05;mix-blend-mode:multiply;
+               background-image:radial-gradient(#5a4a30 1px, transparent 1px);background-size:6px 6px;"></div>
+
+    <!-- Washi tape -->
+    <div aria-hidden="true"
+        style="position:absolute;top:-3px;left:50%;transform:translateX(-50%) rotate(-2deg);
+               width:96px;height:26px;z-index:2;
+               background:rgba(232,196,104,0.68);
+               box-shadow:0 2px 4px rgba(0,0,0,0.18);
+               clip-path:polygon(0% 0%, 4% 22%, 0% 44%, 5% 66%, 0% 88%, 3% 100%,100% 100%, 96% 80%, 100% 58%, 95% 36%, 100% 14%, 97% 0%);"></div>
+
+    <!-- Scrollable content area -->
+    <div id="pm-content"
+        style="position:relative;z-index:1;width:100%;height:100%;overflow-y:auto;overflow-x:hidden;
+               opacity:0;transition:opacity 0.3s ease;">
+    </div>
+
+    <!-- Close button -->
+    <button id="pm-close" type="button" onclick="pmClose()"
+        style="position:absolute;top:16px;right:16px;z-index:10;
+               width:36px;height:36px;border-radius:50%;
+               background:rgba(47,33,21,0.12);border:1px solid rgba(47,33,21,0.18);
+               display:flex;align-items:center;justify-content:center;
+               cursor:pointer;opacity:0;pointer-events:none;
+               transition:opacity 0.2s ease,background 0.2s ease;"
+        onmouseover="this.style.background='rgba(47,33,21,0.22)'"
+        onmouseout="this.style.background='rgba(47,33,21,0.12)'">
+        <span class="material-symbols-outlined" style="font-size:18px;color:#2f2115;pointer-events:none;">close</span>
+    </button>
+</div>
+
+<script>
+(function() {
+    /* ── State ── */
+    var _rect   = null;
+    var _srcEl  = null;
+    var _slide  = 0;
+
+    /* ── Nav button styles ── */
+    var NAV_BTN = 'position:absolute;top:50%;transform:translateY(-50%);z-index:5;'
+               + 'width:40px;height:40px;border-radius:50%;'
+               + 'background:rgba(244,236,216,0.9);border:1px solid rgba(90,60,30,0.2);'
+               + 'box-shadow:0 2px 8px rgba(40,25,10,0.18);'
+               + 'display:flex;align-items:center;justify-content:center;'
+               + 'cursor:pointer;transition:background 0.2s ease;';
+
+    /* ── Project data (from JSON tag) ── */
+    var projectsData = {};
+    try {
+        projectsData = JSON.parse(document.getElementById('projects-json').textContent);
+    } catch(e) {}
+
+    /* ── OPEN ── */
+    window.openFlipModal = function(event, projectId) {
+        var srcEl   = event.currentTarget;
+        var rect    = srcEl.getBoundingClientRect();
+        var project = projectsData[projectId];
+        if (!project) return;
+
+        _srcEl = srcEl;
+        _rect  = rect;
+        _slide = 0;
+
+        var modal    = document.getElementById('pm-modal');
+        var backdrop = document.getElementById('pm-backdrop');
+        var content  = document.getElementById('pm-content');
+        var closeBtn = document.getElementById('pm-close');
+
+        _slide = 0;
+        content.style.opacity = '0';
+        content.innerHTML = '';
+
+        /* 1. Start at card position (FLIP) */
+        modal.style.transition  = 'none';
+        modal.style.top         = rect.top    + 'px';
+        modal.style.left        = rect.left   + 'px';
+        modal.style.width       = rect.width  + 'px';
+        modal.style.height      = rect.height + 'px';
+        modal.style.borderRadius = '20px';
+        modal.style.opacity     = '1';
+        modal.style.pointerEvents = 'auto';
+
+        /* 2. Build image array */
+        var imgs = [];
+        if (project.cover_image) imgs.push(project.cover_image);
+        var raw   = project.images;
+        var extra = Array.isArray(raw) ? raw
+                  : (typeof raw === 'string'
+                      ? (function() { try { return JSON.parse(raw); } catch(e) { return []; } })()
+                      : []);
+        extra.forEach(function(i) { if (i !== project.cover_image) imgs.push(i); });
+
+        /* 3. Build gallery HTML */
+        var galleryHtml = '';
+        if (imgs.length > 0) {
+            var slideHeight = Math.round(window.innerHeight * 0.52);
+            var slides = imgs.map(function(img, i) {
+                return '<div class="pm-slide" data-i="' + i + '" style="height:' + slideHeight + 'px;flex-shrink:0;width:85%;padding:0 8px;box-sizing:border-box;scroll-snap-align:center;">'
+                     + '<div style="width:100%;height:100%;overflow:hidden;border-radius:14px;'
+                     + 'box-shadow:0 10px 32px rgba(40,25,10,0.22);'
+                     + 'border:1px solid rgba(60,40,20,0.08);'
+                     + 'background:rgba(90,74,48,0.05);display:flex;align-items:center;justify-content:center;">'
+                     + '<img src="/storage/' + img + '" alt="Gambar ' + (i+1) + '" loading="' + (i===0?'eager':'lazy') + '" style="width:100%;height:100%;object-fit:cover;display:block;" />'
+                     + '</div></div>';
+            }).join('');
+
+            var navHtml = imgs.length > 1
+                ? '<button type="button" id="pm-gal-prev" style="' + NAV_BTN + 'left:24px;" onclick="pmGalNav(-1)" aria-label="Sebelumnya">'
+                + '<span class="material-symbols-outlined" style="font-size:24px;pointer-events:none;">arrow_back_ios_new</span></button>'
+                + '<button type="button" id="pm-gal-next" style="' + NAV_BTN + 'right:24px;" onclick="pmGalNav(1)" aria-label="Berikutnya">'
+                + '<span class="material-symbols-outlined" style="font-size:24px;pointer-events:none;">arrow_forward_ios</span></button>'
+                + '<div id="pm-gal-counter" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);'
+                + 'background:rgba(47,33,21,0.78);color:#f4ecd8;font-size:11px;font-weight:700;'
+                + 'padding:3px 14px;border-radius:20px;letter-spacing:0.08em;pointer-events:none;z-index:5;">'
+                + '1 / ' + imgs.length + '</div>'
+                : '';
+
+            var trackStyle = imgs.length > 1
+                ? 'padding:0 7.5%;justify-content:flex-start;'
+                : 'padding:0;justify-content:center;';
+
+            galleryHtml = '<div style="position:relative;width:100%;height:' + slideHeight + 'px;border-bottom:1px solid rgba(90,60,30,0.12);overflow:hidden;padding:16px 0;box-sizing:border-box;">'
+                        + '<div id="pm-gal-track" style="display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;'
+                        + 'scroll-behavior:smooth;-ms-overflow-style:none;scrollbar-width:none;box-sizing:border-box;gap:0;' + trackStyle + '">'
+                        + slides
+                        + '</div>' + navHtml + '</div>';
+        }
+
+        /* 4. Build skills tags */
+        var skillsHtml = '';
+        if (project.skills && project.skills.length > 0) {
+            skillsHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">' +
+                project.skills.map(function(s) {
+                    return '<span style="font-size:11px;font-weight:600;padding:4px 10px;background:rgba(90,74,48,0.10);color:#4a3524;border-radius:20px;border:1px solid rgba(90,74,48,0.15)">' + s + '</span>';
+                }).join('') + '</div>';
+        }
+
+        /* 5. Assemble full content */
+        content.innerHTML = galleryHtml +
+            '<div style="padding:28px 32px 36px;">' +
+            '<p style="font-family:monospace;font-size:11px;color:#8b7355;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">' + (project.category || '') + '</p>' +
+            '<h2 style="font-size:clamp(22px,3vw,32px);font-weight:900;color:#2f2115;margin:0 0 12px;line-height:1.1;letter-spacing:-0.02em;">' + project.title + '</h2>' +
+            (project.description ? '<p style="font-size:15px;line-height:1.7;color:#5a4a38;margin:0 0 20px;">' + project.description + '</p>' : '') +
+            skillsHtml +
+            '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;">' +
+            (project.demo_link ? '<a href="' + project.demo_link + '" target="_blank" rel="noopener" class="pm-btn-primary">View Live <span class="material-symbols-outlined" style="font-size:17px;">open_in_new</span></a>' : '') +
+            (project.github_link ? '<a href="' + project.github_link + '" target="_blank" rel="noopener" class="pm-btn-secondary">Source Code <span class="material-symbols-outlined" style="font-size:17px;">code</span></a>' : '') +
+            '</div></div>';
+
+        /* 6. Force reflow then FLIP to center */
+        void modal.offsetWidth;
+
+        var fw = Math.min(window.innerWidth  * 0.96, 1200);
+        var fh = window.innerHeight * 0.94;
+        var ft = (window.innerHeight - fh) / 2;
+        var fl = (window.innerWidth  - fw) / 2;
+
+        modal.style.transition   = 'top 0.65s cubic-bezier(0.22,1,0.36,1),left 0.65s cubic-bezier(0.22,1,0.36,1),width 0.65s cubic-bezier(0.22,1,0.36,1),height 0.65s cubic-bezier(0.22,1,0.36,1),border-radius 0.65s cubic-bezier(0.22,1,0.36,1)';
+        modal.style.top          = ft + 'px';
+        modal.style.left         = fl + 'px';
+        modal.style.width        = fw + 'px';
+        modal.style.height       = fh + 'px';
+        modal.style.borderRadius = '24px';
+
+        backdrop.style.opacity      = '1';
+        backdrop.style.pointerEvents = 'auto';
+        document.body.style.overflow = 'hidden';
+
+        /* Hide navbar */
+        var navbar = document.getElementById('global-navbar');
+        if (navbar) {
+            navbar.style.setProperty('transition', 'opacity 0.3s ease,transform 0.3s ease', 'important');
+            navbar.style.setProperty('opacity', '0', 'important');
+            navbar.style.setProperty('transform', 'translateY(-100%)', 'important');
+            navbar.style.setProperty('pointer-events', 'none', 'important');
+            navbar.style.setProperty('visibility', 'hidden', 'important');
+        }
+
+        setTimeout(function() {
+            content.style.opacity       = '1';
+            closeBtn.style.opacity      = '1';
+            closeBtn.style.pointerEvents = 'auto';
+            var prev = document.getElementById('pm-gal-prev');
+            if (prev) prev.style.opacity = '0.4';
+        }, 380);
+    };
+
+    /* ── GALLERY NAV ── */
+    window.pmGalNav = function(dir) {
+        var track = document.getElementById('pm-gal-track');
+        if (!track) return;
+        var items = track.querySelectorAll('.pm-slide');
+        if (!items.length) return;
+
+        _slide = Math.max(0, Math.min(_slide + dir, items.length - 1));
+        items[_slide].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+        var counter = document.getElementById('pm-gal-counter');
+        if (counter) counter.textContent = (_slide + 1) + ' / ' + items.length;
+
+        var prev = document.getElementById('pm-gal-prev');
+        var next = document.getElementById('pm-gal-next');
+        if (prev) prev.style.opacity = _slide === 0 ? '0.4' : '1';
+        if (next) next.style.opacity = _slide === items.length - 1 ? '0.4' : '1';
+    };
+
+    /* ── CLOSE ── */
+    window.pmClose = function() {
+        var modal    = document.getElementById('pm-modal');
+        var backdrop = document.getElementById('pm-backdrop');
+        var content  = document.getElementById('pm-content');
+        var closeBtn = document.getElementById('pm-close');
+
+        closeBtn.style.opacity       = '0';
+        closeBtn.style.pointerEvents = 'none';
+        content.style.opacity        = '0';
+
+        setTimeout(function() {
+            if (_srcEl) _rect = _srcEl.getBoundingClientRect();
+
+            if (_rect) {
+                modal.style.transition   = 'top 0.5s cubic-bezier(0.22,1,0.36,1),left 0.5s cubic-bezier(0.22,1,0.36,1),width 0.5s cubic-bezier(0.22,1,0.36,1),height 0.5s cubic-bezier(0.22,1,0.36,1),border-radius 0.5s cubic-bezier(0.22,1,0.36,1),opacity 0.5s ease';
+                modal.style.top          = _rect.top    + 'px';
+                modal.style.left         = _rect.left   + 'px';
+                modal.style.width        = _rect.width  + 'px';
+                modal.style.height       = _rect.height + 'px';
+                modal.style.borderRadius = '16px';
+            }
+
+            backdrop.style.opacity      = '0';
+            backdrop.style.pointerEvents = 'none';
+
+            /* Restore navbar */
+            var navbar = document.getElementById('global-navbar');
+            if (navbar) {
+                navbar.style.setProperty('opacity', '1', 'important');
+                navbar.style.setProperty('transform', 'translateY(0)', 'important');
+                navbar.style.setProperty('pointer-events', 'auto', 'important');
+                navbar.style.setProperty('visibility', 'visible', 'important');
+            }
+
+            setTimeout(function() {
+                modal.style.opacity      = '0';
+                modal.style.pointerEvents = 'none';
+                document.body.style.overflow = '';
+                setTimeout(function() { content.innerHTML = ''; }, 100);
+            }, 520);
+        }, 100);
+    };
+
+    window.closeFlipModal = window.pmClose;
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') window.pmClose(); });
+})();
+</script>
+
+@push('styles')
+<style>
+    .pm-btn-primary, .pm-btn-secondary {
+        padding: 13px 26px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.25s ease;
+    }
+    .pm-btn-primary {
+        background: linear-gradient(155deg, #4a3524, #2f2115);
+        color: #f4ecd8;
+        box-shadow: 0 8px 20px rgba(30,18,8,0.28);
+    }
+    .pm-btn-primary:hover {
+        background: linear-gradient(155deg, #e8a53d, #d97706);
+        color: #2f2115;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 26px rgba(217,119,6,0.3);
+    }
+    .pm-btn-secondary {
+        background: rgba(90,74,48,0.08);
+        color: #2f2115;
+        border: 1px solid rgba(90,74,48,0.18);
+    }
+    .pm-btn-secondary:hover {
+        background: rgba(217,119,6,0.10);
+        border-color: rgba(217,119,6,0.4);
+        color: #a35d1e;
+        transform: translateY(-1px);
+    }
+</style>
+@endpush
 @endsection
