@@ -14,7 +14,9 @@ class SkillController extends Controller
     public function index()
     {
         $skills = Skill::latest()->get();
-        return view('admin.skills.index', compact('skills'));
+        $topCount = Skill::where('row_position', 'top')->count();
+        $bottomCount = Skill::where('row_position', 'bottom')->count();
+        return view('admin.skills.index', compact('skills', 'topCount', 'bottomCount'));
     }
 
     /**
@@ -32,8 +34,8 @@ class SkillController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|in:development,design_tool',
-            'icon' => 'nullable|string|max:255',
+            'row_position' => 'required|in:top,bottom',
+            'icon' => 'nullable|string',
             'color_class' => 'nullable|string|max:255',
         ]);
 
@@ -61,8 +63,8 @@ class SkillController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|in:development,design_tool',
-            'icon' => 'nullable|string|max:255',
+            'row_position' => 'required|in:top,bottom',
+            'icon' => 'nullable|string',
             'color_class' => 'nullable|string|max:255',
         ]);
 

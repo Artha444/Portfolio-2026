@@ -9,12 +9,12 @@
 <!-- Desktop Background Layer -->
 <div class="hero-desktop-bg"></div>
 
-<!-- SVG Circle and Icons for Animation -->
 <!-- Ambient Blob Layers (subtle, warm) -->
 <div data-parallax="0.03" class="hero-ambient-blob w-[500px] h-[500px] bg-gradient-to-br from-[#00668a]/6 to-transparent absolute -top-32 -right-20 z-0" style="animation: blobFloat 25s ease-in-out infinite alternate;"></div>
 <div data-parallax="-0.04" class="hero-ambient-blob w-[420px] h-[420px] bg-gradient-to-tr from-[#d97706]/5 to-transparent absolute -bottom-40 -left-24 z-0" style="animation: blobFloat 20s ease-in-out infinite alternate-reverse;"></div>
 <div data-parallax="0.02" class="hero-ambient-blob w-72 h-72 bg-gradient-to-bl from-[#00668a]/4 to-transparent absolute top-1/4 right-1/4 z-0" style="animation: blobFloat 30s ease-in-out infinite alternate 5s;"></div>
 <div data-parallax="-0.02" class="hero-ambient-blob w-80 h-80 bg-gradient-to-tl from-[#d97706]/4 to-transparent absolute bottom-1/3 left-1/3 z-0" style="animation: blobFloat 22s ease-in-out infinite alternate-reverse 3s;"></div>
+
 <svg class="absolute inset-0 w-full h-full z-[1] pointer-events-none" id="hero-bg-elements" data-parallax-layer="-0.015" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
     <defs>
         <linearGradient id="gemini-gradient" x1="0%" y1="0%" x2="100%" y2="100%" gradientUnits="objectBoundingBox">
@@ -23,7 +23,6 @@
             <stop offset="66%" stop-color="#00A651" />
             <stop offset="100%" stop-color="#4285F4" />
         </linearGradient>
-        <!-- Paper Texture Filter (lebih terasa seperti kertas) -->
         <filter id="noise-filter" x="0" y="0" width="100%" height="100%">
             <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch" result="noise"/>
             <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
@@ -31,16 +30,13 @@
                 <feFuncA type="linear" slope="0.06"/>
             </feComponentTransfer>
         </filter>
-        <!-- Kotak-kotak grid seperti kertas grafik -->
         <pattern id="paper-grid" width="24" height="24" patternUnits="userSpaceOnUse">
             <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(26,26,46,0.12)" stroke-width="0.8"/>
             <path d="M 12 0 L 12 24 M 0 12 L 24 12" fill="none" stroke="rgba(26,26,46,0.06)" stroke-width="0.4"/>
         </pattern>
-        <!-- Garis horizontal tipis seperti kertas buku -->
         <pattern id="lined-paper" width="100" height="24" patternUnits="userSpaceOnUse">
             <line x1="0" y1="23" x2="100" y2="23" stroke="rgba(26,26,46,0.05)" stroke-width="0.5"/>
         </pattern>
-        <!-- Desktop Icons for floating display -->
         <g id="icon-folder">
             <path d="M4 8h6l2-2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </g>
@@ -71,22 +67,46 @@
             <circle cx="7" cy="13" r="1" fill="currentColor" opacity="0.5"/>
         </g>
     </defs>
-    <!-- Paper Texture Overlay (noise seperti kertas) -->
+
     <rect width="100%" height="100%" filter="url(#noise-filter)" opacity="1"/>
-    <!-- Lined Paper Overlay -->
     <rect width="100%" height="100%" fill="url(#lined-paper)" opacity="0.7"/>
-    <!-- Kotak-kotak Grid Overlay (seperti kertas grafik) -->
     <rect width="100%" height="100%" fill="url(#paper-grid)" opacity="1"/>
     <circle class="intro-hero-circle" cx="500" cy="500" r="230" fill="none" stroke="rgba(26, 26, 46, 0.18)" stroke-width="2" stroke-dasharray="3 15"></circle>
+
+    <!-- Ikon desktop melayang — mengisi ruang bekas tech-stack window,
+         memakai defs yang sudah ada, bukan aset baru -->
+    <g class="hero-floating-icon" style="color: rgba(217,119,6,0.35); animation-delay: 0s;">
+        <use href="#icon-terminal" x="760" y="140" width="30" height="30" />
+    </g>
+    <g class="hero-floating-icon" style="color: rgba(0,102,138,0.32); animation-delay: 2.5s;">
+        <use href="#icon-folder" x="830" y="260" width="26" height="26" />
+    </g>
+    <g class="hero-floating-icon" style="color: rgba(217,119,6,0.28); animation-delay: 5s;">
+        <use href="#icon-code" x="770" y="360" width="24" height="24" />
+    </g>
+    <g class="hero-floating-icon" style="color: rgba(0,102,138,0.3); animation-delay: 1.2s;">
+        <use href="#icon-browser" x="130" y="200" width="26" height="26" />
+    </g>
+    <g class="hero-floating-icon" style="color: rgba(217,119,6,0.26); animation-delay: 3.8s;">
+        <use href="#icon-palette" x="90" y="340" width="24" height="24" />
+    </g>
 </svg>
 
 <div class="hero-main-content relative z-10" data-parallax-layer="0.025">
-    <!-- New Main Title -->
-    <div class="hero-title-wrapper">
-        <span class="hero-title-glow"></span>
-        <h1 class="font-neue text-[clamp(60px,12vw,160px)] font-extrabold leading-none tracking-tighter text-primary mb-4">
-            <span class="interactive-title-chars intro-main-title">A</span><span class="interactive-title-chars intro-main-title">r</span><span class="interactive-title-chars intro-main-title">t</span><span class="interactive-title-chars intro-main-title">h</span><span class="interactive-title-chars intro-main-title">a</span><span class="interactive-title-chars intro-main-title">&nbsp;</span><span class="interactive-title-chars intro-main-title">K</span><span class="interactive-title-chars intro-main-title">e</span><span class="interactive-title-chars intro-main-title">a</span><span class="interactive-title-chars intro-main-title">n</span><span class="interactive-title-chars intro-main-title">d</span><span class="interactive-title-chars intro-main-title">r</span><span class="interactive-title-chars intro-main-title">e</span>
-        </h1>
+
+    <!-- Kalimat pembuka "Halo, saya" — momen sebelum signature -->
+    <div class="hero-greeting" style="opacity: 0; animation: fadeIn-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;">
+        <span class="hero-greeting-text">Halo, saya</span>
+        <svg class="hero-greeting-arrow" viewBox="0 0 60 40" width="52" height="34">
+            <path d="M8,4 C10,18 22,26 30,28 C36,29.5 40,26 38,22"
+                  fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            <path d="M32,20 L38,22 L36,29" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <!-- Signature -->
+    <div>
+        <x-artha-signature />
     </div>
 
     <div class="max-w-5xl hero-content-inner">
@@ -105,16 +125,15 @@
             <span class="hero-text absolute inset-0 opacity-0" data-index="0">Pelajar SMK</span>
             <span class="hero-text absolute inset-0 opacity-0" data-index="1">RPL Developer</span>
             <span class="hero-text absolute inset-0 opacity-0" data-index="2">Code Creator</span>
-            <span class="hero-text absolute inset-0 opacity-0" data-index="3">Wle wle wle</span>
-            <!-- Hand-drawn underline -->
+            <span class="hero-text absolute inset-0 opacity-0" data-index="3">Problem Solver</span>
             <svg class="desktop-underline" viewBox="0 0 200 12" preserveAspectRatio="none">
                 <path d="M0,6 Q50,12 100,6 T200,6" fill="none" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
             </svg>
         </div>
 
         <p class="font-body-md text-body-md text-on-surface-variant/70 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed intro-paragraph">
-                        Seorang pelajar SMK jurusan Rekayasa Perangkat Lunak (RPL) yang antusias dalam belajar web development. Membangun berbagai proyek dari tugas sekolah hingga eksplorasi mandiri.
-                    </p>
+            Seorang pelajar SMK jurusan Rekayasa Perangkat Lunak (RPL) yang antusias dalam belajar web development. Membangun berbagai proyek dari tugas sekolah hingga eksplorasi mandiri.
+        </p>
 
         <!-- Desktop CTA + Sticky Tags row -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 intro-cta">
@@ -141,92 +160,259 @@
     </div>
 </div>
 
-<!-- Signature Element: Floating Desktop Window (Tech Stack) -->
-<div class="desktop-window absolute z-20 hidden lg:block" data-parallax-layer="0.045" style="top: 18%; right: max(24px, 5vw); width: 200px; animation: windowFloat 6s ease-in-out infinite alternate;">
-    <div class="window-titlebar">
-        <span class="window-dot dot-red"></span>
-        <span class="window-dot dot-yellow"></span>
-        <span class="window-dot dot-green"></span>
-        <span class="window-title-text">tech-stack</span>
-    </div>
-    <div class="p-4 flex flex-col gap-2.5">
-        <div class="flex items-center gap-2.5 text-sm" style="font-family: 'JetBrains Mono', monospace;">
-            <span class="w-2 h-2 rounded-full bg-[#ff5f56]"></span>
-            <span class="text-[#5c5760]">Laravel</span>
-        </div>
-        <div class="flex items-center gap-2.5 text-sm" style="font-family: 'JetBrains Mono', monospace;">
-            <span class="w-2 h-2 rounded-full bg-[#ffbd2e]"></span>
-            <span class="text-[#5c5760]">Tailwind</span>
-        </div>
-        <div class="flex items-center gap-2.5 text-sm" style="font-family: 'JetBrains Mono', monospace;">
-            <span class="w-2 h-2 rounded-full bg-[#27c93f]"></span>
-            <span class="text-[#5c5760]">JavaScript</span>
-        </div>
-        <div class="flex items-center gap-2.5 text-sm" style="font-family: 'JetBrains Mono', monospace;">
-            <span class="w-2 h-2 rounded-full bg-[#00668a]"></span>
-            <span class="text-[#5c5760]">PHP / MySQL</span>
-        </div>
-        <div class="flex items-center gap-2.5 text-sm" style="font-family: 'JetBrains Mono', monospace;">
-            <span class="w-2 h-2 rounded-full bg-[#d97706]"></span>
-            <span class="text-[#5c5760]">Figma</span>
-        </div>
-    </div>
-</div>
-
 <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer transition-opacity duration-300 intro-scroll-down" id="scroll-down">
-<span class="material-symbols-outlined text-on-surface-variant/40 text-3xl">expand_circle_down</span>
+    <span class="material-symbols-outlined text-on-surface-variant/40 text-3xl">expand_circle_down</span>
 </div>
 
-<!-- Hand-drawn connector line from hero to scroll -->
 <svg class="absolute bottom-20 left-1/2 -translate-x-1/2 z-0 pointer-events-none hidden md:block desktop-connector" width="2" height="40" viewBox="0 0 2 40">
     <path d="M1,0 Q1,20 1,40" fill="none" stroke="rgba(26,26,46,0.1)" stroke-width="1.5" stroke-dasharray="3 4"/>
 </svg>
 </section>
+
+@once
+@push('styles')
+<style>
+    .hero-greeting{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: -8px;
+        transform: rotate(-2deg);
+    }
+    .hero-greeting-text{
+        font-family: 'Beau Rivage', cursive;
+        font-size: clamp(22px, 3vw, 32px);
+        color: #1c2541;
+        opacity: 0.85;
+    }
+    .hero-greeting-arrow{
+        margin-top: 10px;
+        transform: rotate(4deg);
+    }
+
+    /* Ikon desktop melayang di background — sangat halus, tidak mengganggu fokus utama */
+    .hero-floating-icon{
+        animation: hero-icon-float 7s ease-in-out infinite;
+        transform-origin: center;
+    }
+    @keyframes hero-icon-float{
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-14px) rotate(3deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+        .hero-floating-icon{ animation: none; }
+    }
+
+    @media (max-width: 1024px){
+        .hero-floating-icon{ display: none; }
+    }
+</style>
+@endpush
+@endonce
 
 
 
 <!-- About Me Section -->
 <section class="py-24 md:py-section-gap px-6 md:px-10 lg:px-16 max-w-[1280px] mx-auto" id="about">
     <div class="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-24 items-center mb-32">
+
         <!-- Image Column -->
         <div class="md:col-span-2 flex justify-center order-1 md:order-2">
-            <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-xl bg-surface-container-high reveal-clip">
-                <!-- Ganti 'src' dengan path ke foto Anda -->
-                <img src="https://i.pravatar.cc/320?u=artha" alt="Foto Artha" class="w-full h-full object-cover">
-                <div class="absolute inset-0 border-4 border-surface-container-lowest rounded-full"></div>
+            <div class="about-polaroid reveal-clip">
+                <div class="about-polaroid-tape"></div>
+                <div class="about-polaroid-photo">
+                    <img src="https://i.pravatar.cc/320?u=artha" alt="Foto Artha" class="w-full h-full object-cover">
+                </div>
+                <div class="about-polaroid-caption">Artha — RPL, 2026</div>
             </div>
         </div>
-        <!-- Text Column -->
-        <div class="md:col-span-3 order-2 md:order-1">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 mb-6">
-                <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-                <span class="font-label-sm text-xs text-secondary uppercase tracking-widest font-bold">Introduction</span>
-            </div>
-            
-            <h2 class="font-neue text-4xl md:text-5xl lg:text-[54px] text-primary mb-8 font-extrabold tracking-tight leading-[1.15]">
-                Pelajar SMK dengan <br class="hidden md:block" />
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary" data-split>Gairah untuk Kode.</span>
-            </h2>
-            
-            <div class="relative pl-6 md:pl-8 mb-8 border-l-4 border-secondary/30">
-                <p class="font-body-md text-lg md:text-xl text-on-surface-variant leading-relaxed">
-                    Halo! Saya Artha, seorang web developer yang sedang menempuh pendidikan di jurusan <span class="font-semibold text-primary">Rekayasa Perangkat Lunak</span>. Saya menemukan hasrat saya dalam mengubah ide-ide kompleks menjadi aplikasi web yang elegan dan fungsional.
-                </p>
-            </div>
-            
-            <p class="font-body-md text-base md:text-lg text-on-surface-variant/80 leading-relaxed mb-8">
-                Di luar tugas sekolah, saya aktif mengeksplorasi teknologi baru dan membangun proyek pribadi. Saya percaya bahwa fondasi yang kuat dalam pemecahan masalah dan desain yang bersih adalah kunci untuk pengembangan perangkat lunak yang hebat.
-            </p>
 
-            <div class="flex flex-wrap gap-3">
-                <span class="px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-sm font-semibold text-primary shadow-sm hover:-translate-y-1 transition-transform cursor-default">Laravel</span>
-                <span class="px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-sm font-semibold text-primary shadow-sm hover:-translate-y-1 transition-transform cursor-default">Tailwind CSS</span>
-                <span class="px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-sm font-semibold text-primary shadow-sm hover:-translate-y-1 transition-transform cursor-default">JavaScript</span>
-                <span class="px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-sm font-semibold text-primary shadow-sm hover:-translate-y-1 transition-transform cursor-default">UI/UX Design</span>
+<!-- Text Column -->
+<div class="md:col-span-3 order-2 md:order-1">
+
+    <!-- Stempel "Introduction" -->
+    <div class="about-stamp">
+        <span class="about-stamp-dot"></span>
+        Introduction
+    </div>
+
+    <h2 class="font-neue text-4xl md:text-5xl lg:text-[54px] text-primary mb-3 font-extrabold tracking-tight leading-[1.15]">
+        Merancang Solusi Digital <br class="hidden md:block" />
+        dengan Presisi &amp; Detail.
+    </h2>
+
+    <svg class="about-underline mb-8" viewBox="0 0 260 12" preserveAspectRatio="none">
+        <path d="M0,6 Q65,12 130,6 T260,6" fill="none" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+    </svg>
+
+    <!-- Quote/lead paragraph, gaya index card kertas -->
+    <div class="about-note">
+        <div class="about-note-tape"></div>
+        <p class="font-body-md text-lg md:text-xl text-on-surface-variant leading-relaxed">
+            Saya Artha, siswa jurusan <span class="font-semibold text-primary">Rekayasa Perangkat Lunak</span> yang berfokus pada pengembangan web — mulai dari perancangan antarmuka hingga logika di baliknya. Bagi saya, kode yang baik adalah kode yang jelas, terstruktur, dan enak dipakai penggunanya.
+        </p>
+    </div>
+
+    <p class="font-body-md text-base md:text-lg text-on-surface-variant/80 leading-relaxed mb-8">
+        Selain proyek sekolah, saya terus mengasah kemampuan lewat eksplorasi mandiri — mempelajari framework baru, membaca dokumentasi, dan menyelesaikan studi kasus nyata. Saya percaya progres terbaik datang dari kebiasaan membangun sesuatu secara konsisten, bukan sekadar memahami teori.
+    </p>
+
+    <!-- Mini terminal — reuse .desktop-window, ganti skill tags -->
+    <div class="desktop-window about-terminal">
+        <div class="window-titlebar">
+            <span class="window-dot dot-red"></span>
+            <span class="window-dot dot-yellow"></span>
+            <span class="window-dot dot-green"></span>
+            <span class="window-title-text">whoami.sh</span>
+        </div>
+        <div class="about-terminal-body">
+            <div><span class="prompt-symbol">$</span> ls -la ~/artha</div>
+            <div class="about-terminal-line">
+                <span class="about-terminal-icon">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 8h6l2-2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="about-terminal-key">fokus/</span>
+                <span class="about-terminal-val">Web Development</span>
             </div>
+            <div class="about-terminal-line">
+                <span class="about-terminal-icon">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 8h6l2-2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="about-terminal-key">belajar/</span>
+                <span class="about-terminal-val">Laravel &amp; Livewire</span>
+            </div>
+            <div class="about-terminal-line">
+                <span class="about-terminal-icon">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 8h6l2-2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="about-terminal-key">pendekatan/</span>
+                <span class="about-terminal-val">Detail-oriented, iteratif</span>
+            </div>
+            <div class="about-terminal-line">
+                <span class="about-terminal-icon">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 8h6l2-2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="about-terminal-key">status/</span>
+                <span class="about-terminal-val">Open to collaborate</span>
+            </div>
+            <div class="mt-2"><span class="prompt-symbol">$</span> <span class="pm-caret">▌</span></div>
         </div>
     </div>
+</div>
+    </div>
 </section>
+
+@once
+@push('styles')
+<style>
+    /* ── Stempel "Introduction" ── */
+    .about-stamp{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(217,119,6,0.4);
+        color: #a35d1e;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        transform: rotate(-1.5deg);
+        margin-bottom: 20px;
+    }
+    .about-stamp-dot{
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #d97706;
+        animation: pm-blink 1.6s steps(1) infinite;
+    }
+
+    /* ── Hand-drawn underline ── */
+    .about-underline{ width: 200px; height: 10px; display: block; }
+
+    /* ── Quote block: index card kertas + washi tape ── */
+    .about-note{
+        position: relative;
+        background: #F4ECD8;
+        padding: 22px 24px 20px 28px;
+        border-radius: 3px;
+        margin-bottom: 28px;
+        transform: rotate(-0.6deg);
+        box-shadow:
+            0 1px 0 rgba(255,255,255,0.5) inset,
+            3px 6px 16px rgba(40,25,10,0.14);
+    }
+    .about-note::before{
+        content: "";
+        position: absolute; inset: 0;
+        border-radius: 3px;
+        background-image: radial-gradient(#5a4a30 1px, transparent 1px);
+        background-size: 6px 6px;
+        opacity: 0.04;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+    }
+    .about-note-tape{
+        position: absolute;
+        top: -10px; left: 28px;
+        width: 64px; height: 22px;
+        background: rgba(232,196,104,0.7);
+        transform: rotate(-4deg);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.16);
+        clip-path: polygon(0% 0%, 5% 25%, 0% 50%, 6% 75%, 0% 100%, 100% 100%, 94% 75%, 100% 50%, 95% 25%, 100% 0%);
+    }
+
+    /* ── Foto polaroid ── */
+    .about-polaroid{
+        position: relative;
+        width: 260px;
+        background: #fdfbf6;
+        padding: 14px 14px 46px;
+        transform: rotate(2.5deg);
+        box-shadow:
+            0 1px 0 rgba(255,255,255,0.6) inset,
+            4px 10px 24px rgba(40,25,10,0.22);
+        transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .about-polaroid:hover{ transform: rotate(0deg) translateY(-4px); }
+    @media (min-width: 768px){ .about-polaroid{ width: 300px; } }
+
+    .about-polaroid-tape{
+        position: absolute;
+        top: -12px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+        width: 84px; height: 26px;
+        background: rgba(232,196,104,0.72);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+        clip-path: polygon(0% 0%, 4% 22%, 0% 44%, 5% 66%, 0% 88%, 3% 100%, 100% 100%, 96% 80%, 100% 58%, 95% 36%, 100% 14%, 97% 0%);
+    }
+    .about-polaroid-photo{
+        width: 100%; aspect-square;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.06);
+        background: #f0ece4;
+        aspect-ratio: 1 / 1;
+    }
+    .about-polaroid-caption{
+        position: absolute;
+        bottom: 14px; left: 0; right: 0;
+        text-align: center;
+        font-family: 'Beau Rivage', cursive;
+        font-size: 20px;
+        color: #1c2541;
+        opacity: 0.85;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+        .about-stamp-dot{ animation: none; }
+        .about-polaroid{ transition: none; }
+    }
+</style>
+@endpush
+@endonce
 
 <!-- Interstitial Shape Section -->
 <section id="interstitial-shape" class="relative min-h-[75vh] py-20 flex flex-col items-center justify-center text-center overflow-hidden bg-surface-container-lowest">
@@ -301,7 +487,7 @@
             
             <div class="relative inline-block">
                 <h2 class="font-neue text-[clamp(40px,6vw,60px)] font-extrabold leading-[1.0] tracking-tighter text-primary">
-                    Papan Karya &<br/>Eksplorasi.
+                    Karya Terbaik.
                 </h2>
                 <!-- Hand-drawn underline -->
                 <svg class="absolute bottom-[-5px] left-0 w-full opacity-60" viewBox="0 0 200 12" preserveAspectRatio="none">
@@ -309,111 +495,196 @@
                 </svg>
             </div>
         </div>
-        
-        <a href="/projects" class="desktop-cta group inline-flex items-center gap-2 border-[rgba(0,0,0,0.1)] bg-white text-primary hover:bg-[#f0ece4] shadow-sm self-start md:self-auto">
-            <span class="material-symbols-outlined text-[16px]">folder_open</span>
-            <span class="font-bold">Buka Semua Folder</span>
-            <span class="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-        </a>
     </div>
 
-    <!-- Desktop Bulletin Board (Wooden) -->
-    <div class="hidden lg:block relative w-full aspect-[16/9] bg-[#8B5A2B] rounded-3xl border-[20px] border-[#5E3A18] shadow-[inset_0_0_80px_rgba(0,0,0,0.8),0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden z-10 mb-8">
-        <!-- Wood Texture (CSS) -->
-        <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-multiply" style="background-image: repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(0,0,0,0.4) 60px, rgba(0,0,0,0.4) 62px), repeating-linear-gradient(0deg, transparent, transparent 120px, rgba(0,0,0,0.2) 120px, rgba(0,0,0,0.2) 122px);"></div>
-        <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: repeating-radial-gradient(ellipse at center, transparent, transparent 3px, #000 3px, #000 5px); background-size: 30px 60px;"></div>
+   <!-- Desktop Bulletin Board (Wooden) -->
+<div class="hidden lg:block relative w-full aspect-[16/9] rounded-3xl border-[20px] overflow-hidden z-10 mb-8"
+     style="
+        background: linear-gradient(155deg, #9c6a42 0%, #8B5A2B 50%, #7a4b23 100%);
+        border-color: #5E3A18;
+        box-shadow:
+            inset 0 0 0 1.5px rgba(255,255,255,0.08),
+            inset 0 2px 4px rgba(0,0,0,0.25),
+            0 20px 50px rgba(0,0,0,0.35);
+     ">
 
-        @php
-            $centerProject = $projects->firstWhere('board_position', 'center') 
-                             ?? $projects->firstWhere('id', 1) 
-                             ?? $projects->first();
-            
-            $cornerProjectsArray = [
-                $projects->firstWhere('board_position', 'top_left'),
-                $projects->firstWhere('board_position', 'top_right'),
-                $projects->firstWhere('board_position', 'bottom_left'),
-                $projects->firstWhere('board_position', 'bottom_right')
-            ];
-            
-            $usedIds = collect($cornerProjectsArray)->filter()->pluck('id')->push($centerProject?->id)->toArray();
-            $unassignedProjects = $projects->whereNotIn('id', $usedIds)->values();
-            
-            foreach ($cornerProjectsArray as $index => $cp) {
-                if (!$cp && $unassignedProjects->isNotEmpty()) {
-                    $cornerProjectsArray[$index] = $unassignedProjects->shift();
-                }
+    <!-- Wood grain — satu layer garis diagonal halus, ilustratif bukan noise -->
+    <div class="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.30]"
+         style="
+            background-image: repeating-linear-gradient(
+                92deg,
+                rgba(255,255,255,0.10) 0px,
+                rgba(255,255,255,0.10) 1px,
+                transparent 1px,
+                transparent 5px,
+                rgba(0,0,0,0.08) 5px,
+                rgba(0,0,0,0.08) 6px,
+                transparent 6px,
+                transparent 13px
+            );
+         "></div>
+
+    <!-- Beberapa "mata kayu" (knot) samar, secukupnya saja -->
+    <div class="absolute top-[18%] left-[8%] w-7 h-5 rounded-full pointer-events-none opacity-[0.16]"
+         style="background: radial-gradient(ellipse, #3d2313 0%, transparent 70%); mix-blend-mode: multiply;"></div>
+    <div class="absolute bottom-[22%] right-[10%] w-6 h-6 rounded-full pointer-events-none opacity-[0.14]"
+         style="background: radial-gradient(ellipse, #3d2313 0%, transparent 70%); mix-blend-mode: multiply;"></div>
+
+    @php
+        $centerProject = $projects->firstWhere('board_position', 'center') 
+                         ?? $projects->firstWhere('id', 1) 
+                         ?? $projects->first();
+        
+        $cornerProjectsArray = [
+            $projects->firstWhere('board_position', 'top_left'),
+            $projects->firstWhere('board_position', 'top_right'),
+            $projects->firstWhere('board_position', 'bottom_left'),
+            $projects->firstWhere('board_position', 'bottom_right')
+        ];
+        
+        $usedIds = collect($cornerProjectsArray)->filter()->pluck('id')->push($centerProject?->id)->toArray();
+        $unassignedProjects = $projects->whereNotIn('id', $usedIds)->values();
+        
+        foreach ($cornerProjectsArray as $index => $cp) {
+            if (!$cp && $unassignedProjects->isNotEmpty()) {
+                $cornerProjectsArray[$index] = $unassignedProjects->shift();
             }
-            
-            $cornerProjects = collect($cornerProjectsArray)->filter();
-            
-            $cornerPositions = [
-                'top-6 left-6 -rotate-[4deg]',
-                'top-6 right-6 rotate-[3deg]',
-                'bottom-6 left-6 rotate-[5deg]',
-                'bottom-6 right-6 -rotate-[3deg]'
-            ];
-        @endphp
+        }
+        
+        $cornerProjects = collect($cornerProjectsArray)->filter();
+        
+        $cornerPositions = [
+            'top-6 left-6 -rotate-[4deg]',
+            'top-6 right-6 rotate-[3deg]',
+            'bottom-6 left-6 rotate-[5deg]',
+            'bottom-6 right-6 -rotate-[3deg]'
+        ];
+    @endphp
 
-        <!-- Center Project (Center) -->
-        @if($centerProject)
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[38%] z-20 transition-transform duration-500 hover:scale-[1.05] hover:z-30">
-            <button type="button" onclick="openFlipModal(event, {{ $centerProject->id }})" class="group block w-full text-left no-underline outline-none cursor-pointer">
-                <div class="desktop-window w-full bg-white relative shadow-[0_15px_40px_rgba(0,0,0,0.6)]">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-7 bg-white/40 backdrop-blur-md border border-white/60 shadow-sm rotate-[2deg] z-10" style="clip-path: polygon(0 5%, 100% 0, 95% 95%, 5% 100%);"></div>
-                    
-                    <div class="window-titlebar bg-[#f7f5f0] border-b border-[#e0dbd0] py-2 px-4">
-                        <span class="window-dot dot-red"></span>
-                        <span class="window-dot dot-yellow"></span>
-                        <span class="window-dot dot-green"></span>
-                        <span class="window-title-text text-[#8b8680] text-xs font-mono ml-2 truncate">~/projects/{{ Str::slug($centerProject->title) }}.exe</span>
-                    </div>
-                    <div class="p-4 pb-5">
-                        <div class="relative w-full aspect-video rounded overflow-hidden bg-[#f0ece4] mb-4 border border-[#e0dbd0]">
-                            @php $coverImage = $centerProject->cover_image ?? ($centerProject->images[0] ?? null); @endphp
-                            @if($coverImage)
-                                <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $centerProject->title }}" class="w-full h-full object-cover">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-[#8b8680]/30 font-mono text-sm">[ NO_PREVIEW ]</div>
-                            @endif
-                        </div>
-                        <h3 class="font-neue text-2xl font-bold text-primary mb-1 tracking-tight truncate group-hover:text-[#d97706] transition-colors">{{ $centerProject->title }}</h3>
-                        <p class="font-mono text-[11px] text-[#8b8680] uppercase tracking-wider truncate">{{ $centerProject->category }}</p>
-                    </div>
-                </div>
-            </button>
+    @php
+    // Aksen warna per posisi — variasi "app" tapi tetap dalam palet tema
+    $accentColors = ['#d97706', '#00668a', '#a13d2b', '#4a7a4e']; // amber, teal, terracotta, sage
+@endphp
+
+<!-- Center Project (Center) -->
+@if($centerProject)
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[38%] z-20 transition-transform duration-500 hover:scale-[1.05] hover:z-30">
+
+    <!-- Bayangan "melayang" di atas kayu -->
+    <div class="absolute left-1/2 -translate-x-1/2 -bottom-3 w-[85%] h-6 rounded-full pointer-events-none"
+         style="background: radial-gradient(ellipse, rgba(20,12,5,0.45) 0%, transparent 75%); filter: blur(4px);"></div>
+
+    <button type="button" onclick="openFlipModal(event, {{ $centerProject->id }})" class="group relative block w-full text-left no-underline outline-none cursor-pointer">
+
+        <!-- Label FEATURED, terlipat di pojok, motif sticky-tag -->
+        <div class="absolute -top-2 -left-2 z-20 font-mono text-[8px] font-bold tracking-widest text-white px-2 py-1 rotate-[-8deg] pointer-events-none"
+             style="background: #a13d2b; box-shadow: 0 3px 6px rgba(0,0,0,0.3); clip-path: polygon(0 0, 100% 0, 100% 100%, 8% 100%, 0 80%);">
+            FEATURED
         </div>
+
+        <div class="desktop-window w-full bg-white relative shadow-[0_15px_40px_rgba(0,0,0,0.6)] overflow-hidden">
+
+            <!-- Washi tape frosted -->
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-7 bg-white/40 backdrop-blur-md border border-white/60 shadow-sm rotate-[2deg] z-10" style="clip-path: polygon(0 5%, 100% 0, 95% 95%, 5% 100%);"></div>
+
+            <!-- Reflection strip tipis di atas, kesan permukaan kaca layar -->
+            <div class="absolute inset-x-0 top-0 h-8 pointer-events-none z-[5]"
+                 style="background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, transparent 100%);"></div>
+
+            <div class="window-titlebar bg-[#f7f5f0] border-b py-2 px-4 relative"
+                 style="border-color: {{ $accentColors[0] }}55;">
+                <span class="window-dot dot-red"></span>
+                <span class="window-dot dot-yellow"></span>
+                <span class="window-dot dot-green"></span>
+                <span class="window-title-text text-[#8b8680] text-xs font-mono ml-2 truncate">
+                    <span style="color: {{ $accentColors[0] }};">▌</span>
+                </span>
+            </div>
+
+            <div class="p-4 pb-5">
+                <div class="relative w-full aspect-video rounded overflow-hidden bg-[#f0ece4] mb-4 border border-[#e0dbd0]">
+                    @php $coverImage = $centerProject->cover_image ?? ($centerProject->images[0] ?? null); @endphp
+                    @if($coverImage)
+                        <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $centerProject->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]">
+                    @else
+                        <div class="w-full h-full flex items-center justify-center text-[#8b8680]/30 font-mono text-sm">[ NO_PREVIEW ]</div>
+                    @endif
+
+                    <!-- Scanline halus, sangat samar -->
+                    <div class="absolute inset-0 pointer-events-none opacity-[0.06]"
+                         style="background-image: repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 3px);"></div>
+
+                    <!-- Loading bar, muncul saat hover -->
+                    <div class="absolute bottom-0 left-0 h-[3px] w-0 group-hover:w-full transition-all duration-500 ease-out"
+                         style="background: {{ $accentColors[0] }};"></div>
+                </div>
+                <h3 class="font-neue text-2xl font-bold text-primary mb-1 tracking-tight truncate transition-colors" style="--tw-text-opacity:1;" onmouseover="this.style.color='{{ $accentColors[0] }}'" onmouseout="this.style.color=''">{{ $centerProject->title }}</h3>
+                <p class="font-mono text-[11px] text-[#8b8680] uppercase tracking-wider truncate">{{ $centerProject->category }}</p>
+            </div>
+        </div>
+    </button>
+</div>
+@endif
+
+<!-- Corner Projects -->
+@foreach($cornerProjects as $index => $p)
+@php $accent = $accentColors[$index % 4]; @endphp
+<div class="absolute {{ $cornerPositions[$index] }} w-[24%] z-10 transition-transform duration-500 hover:scale-[1.08] hover:rotate-0 hover:z-30">
+
+    <!-- Bayangan melayang -->
+    <div class="absolute left-1/2 -translate-x-1/2 -bottom-2 w-[80%] h-4 rounded-full pointer-events-none"
+         style="background: radial-gradient(ellipse, rgba(20,12,5,0.4) 0%, transparent 75%); filter: blur(3px);"></div>
+
+    <button type="button" onclick="openFlipModal(event, {{ $p->id }})" class="group relative block w-full text-left no-underline outline-none cursor-pointer">
+
+        @if($index % 2 === 0)
+            <!-- Washi tape frosted -->
+            <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-14 h-5 bg-white/40 backdrop-blur-md border border-white/60 shadow-sm rotate-[-3deg] z-10" style="clip-path: polygon(0 5%, 100% 0, 95% 95%, 5% 100%);"></div>
+        @else
+            <!-- Binder clip logam -->
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-9 h-5 z-10 rounded-[3px_3px_6px_6px]"
+                 style="background: linear-gradient(160deg, #dcdcdc, #8a8a8a 55%, #565656); box-shadow: 0 3px 5px rgba(0,0,0,0.35), inset 0 1px 1px rgba(255,255,255,0.5);">
+                <div class="absolute top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full" style="background: rgba(0,0,0,0.35); box-shadow: inset 0 1px 1px rgba(0,0,0,0.5);"></div>
+            </div>
         @endif
 
-        <!-- Corner Projects -->
-        @foreach($cornerProjects as $index => $p)
-        <div class="absolute {{ $cornerPositions[$index] }} w-[24%] z-10 transition-transform duration-500 hover:scale-[1.08] hover:rotate-0 hover:z-30">
-            <button type="button" onclick="openFlipModal(event, {{ $p->id }})" class="group block w-full text-left no-underline outline-none cursor-pointer">
-                <div class="desktop-window w-full bg-white relative shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                    <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-14 h-5 bg-white/40 backdrop-blur-md border border-white/60 shadow-sm rotate-[-3deg] z-10" style="clip-path: polygon(0 5%, 100% 0, 95% 95%, 5% 100%);"></div>
-                    
-                    <div class="window-titlebar bg-[#f7f5f0] border-b border-[#e0dbd0] py-1.5 px-3">
-                        <span class="window-dot dot-red w-2 h-2"></span>
-                        <span class="window-dot dot-yellow w-2 h-2"></span>
-                        <span class="window-dot dot-green w-2 h-2"></span>
-                        <span class="window-title-text text-[#8b8680] text-[9px] font-mono ml-1.5 truncate max-w-[120px]">~/{{ Str::limit(Str::slug($p->title), 10) }}.exe</span>
-                    </div>
-                    <div class="p-3 pb-4">
-                        <div class="relative w-full aspect-video rounded-sm overflow-hidden bg-[#f0ece4] mb-3 border border-[#e0dbd0]">
-                            @php $coverImage = $p->cover_image ?? ($p->images[0] ?? null); @endphp
-                            @if($coverImage)
-                                <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $p->title }}" class="w-full h-full object-cover">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-[#8b8680]/30 font-mono text-[10px]">[ NO_PREVIEW ]</div>
-                            @endif
-                        </div>
-                        <h3 class="font-neue text-lg font-bold text-primary mb-0.5 tracking-tight truncate group-hover:text-[#d97706] transition-colors">{{ $p->title }}</h3>
-                        <p class="font-mono text-[9px] text-[#8b8680] uppercase tracking-wider truncate">{{ $p->category }}</p>
-                    </div>
+        <div class="desktop-window w-full bg-white relative shadow-[0_10px_30px_rgba(0,0,0,0.5)] overflow-hidden">
+
+            <div class="absolute inset-x-0 top-0 h-6 pointer-events-none z-[5]"
+                 style="background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 100%);"></div>
+
+            <div class="window-titlebar bg-[#f7f5f0] border-b py-1.5 px-3 relative" style="border-color: {{ $accent }}55;">
+                <span class="window-dot dot-red w-2 h-2"></span>
+                <span class="window-dot dot-yellow w-2 h-2"></span>
+                <span class="window-dot dot-green w-2 h-2"></span>
+                <span class="window-title-text text-[#8b8680] text-[9px] font-mono ml-1.5 truncate max-w-[110px]">
+                    <span style="color: {{ $accent }};">▌</span>
+                </span>
+            </div>
+
+            <div class="p-3 pb-4">
+                <div class="relative w-full aspect-video rounded-sm overflow-hidden bg-[#f0ece4] mb-3 border border-[#e0dbd0]">
+                    @php $coverImage = $p->cover_image ?? ($p->images[0] ?? null); @endphp
+                    @if($coverImage)
+                        <img src="{{ asset('storage/' . $coverImage) }}" alt="{{ $p->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]">
+                    @else
+                        <div class="w-full h-full flex items-center justify-center text-[#8b8680]/30 font-mono text-[10px]">[ NO_PREVIEW ]</div>
+                    @endif
+
+                    <div class="absolute inset-0 pointer-events-none opacity-[0.06]"
+                         style="background-image: repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 3px);"></div>
+
+                    <div class="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full transition-all duration-500 ease-out"
+                         style="background: {{ $accent }};"></div>
                 </div>
-            </button>
+                <h3 class="font-neue text-lg font-bold text-primary mb-0.5 tracking-tight truncate transition-colors" onmouseover="this.style.color='{{ $accent }}'" onmouseout="this.style.color=''">{{ $p->title }}</h3>
+                <p class="font-mono text-[9px] text-[#8b8680] uppercase tracking-wider truncate">{{ $p->category }}</p>
+            </div>
         </div>
-        @endforeach
-    </div>
+    </button>
+</div>
+@endforeach
+</div>
 
     <!-- Mobile Grid (Hidden on Desktop) -->
     <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:hidden">
@@ -491,60 +762,52 @@
         </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Card 1: Development -->
-        <div class="group bg-white p-8 md:p-10 rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-outline-variant/20 hover:border-primary/10 transition-all duration-500 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)]">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="w-14 h-14 rounded-2xl bg-[#e6f0fa] flex items-center justify-center text-[#00668a] group-hover:scale-110 transition-transform duration-500">
-                    <span class="material-symbols-outlined text-3xl">code_blocks</span>
-                </div>
-                <h3 class="font-neue text-3xl font-black text-primary">Development</h3>
-            </div>
-            <div class="flex flex-col gap-3">
-                @forelse($devSkills as $skill)
-                <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-[#e6f0fa]/60 transition-colors duration-300 border border-transparent hover:border-[#00668a]/10 cursor-default">
-                    @if($skill->color_class)
-                    <div class="flex items-center gap-3">
-                        <span class="w-2.5 h-2.5 rounded-full {{ $skill->color_class }}"></span>
-                        <span class="font-bold text-primary text-lg">{{ $skill->name }}</span>
+    <div class="w-full relative overflow-hidden flex flex-col gap-6 py-4">
+        
+        <!-- Marquee Row 1 (Top Skills) -->
+        <div class="marquee-container group">
+            <div class="marquee-content">
+                @for($i = 0; $i < 12; $i++)
+                @foreach($topSkills as $skill)
+                <div class="skill-card hover:bg-slate-50">
+                    <div class="skill-icon flex items-center justify-center">
+                        @if($skill->icon && (str_contains($skill->icon, '<img') || str_contains($skill->icon, '<svg')))
+                            {!! $skill->icon !!}
+                        @elseif($skill->icon)
+                            <span class="material-symbols-outlined text-primary">{{ $skill->icon }}</span>
+                        @else
+                            <span class="w-3 h-3 rounded-full {{ $skill->color_class ?? 'bg-primary' }}"></span>
+                        @endif
                     </div>
-                    @else
                     <span class="font-bold text-primary text-lg">{{ $skill->name }}</span>
-                    @endif
-                    <span class="material-symbols-outlined text-on-surface-variant/30">{{ $skill->icon }}</span>
                 </div>
-                @empty
-                <p class="text-on-surface-variant/50 p-4">No development skills listed yet.</p>
-                @endforelse
+                @endforeach
+                @endfor
             </div>
         </div>
 
-        <!-- Card 2: Design & Tools -->
-        <div class="group bg-white p-8 md:p-10 rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-outline-variant/20 hover:border-primary/10 transition-all duration-500 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)]">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform duration-500">
-                    <span class="material-symbols-outlined text-3xl">design_services</span>
-                </div>
-                <h3 class="font-neue text-3xl font-black text-primary">Design & Tools</h3>
-            </div>
-            <div class="flex flex-col gap-3">
-                @forelse($toolSkills as $skill)
-                <div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest hover:bg-gray-100 transition-colors duration-300 border border-transparent hover:border-gray-200 cursor-default">
-                    @if($skill->color_class)
-                    <div class="flex items-center gap-3">
-                        <span class="w-2.5 h-2.5 rounded-full {{ $skill->color_class }}"></span>
-                        <span class="font-bold text-primary text-lg">{{ $skill->name }}</span>
+        <!-- Marquee Row 2 (Bottom Skills) -->
+        <div class="marquee-container group">
+            <div class="marquee-content reverse">
+                @for($i = 0; $i < 12; $i++)
+                @foreach($bottomSkills as $skill)
+                <div class="skill-card hover:bg-slate-50">
+                    <div class="skill-icon flex items-center justify-center">
+                        @if($skill->icon && (str_contains($skill->icon, '<img') || str_contains($skill->icon, '<svg')))
+                            {!! $skill->icon !!}
+                        @elseif($skill->icon)
+                            <span class="material-symbols-outlined text-secondary">{{ $skill->icon }}</span>
+                        @else
+                            <span class="w-3 h-3 rounded-full {{ $skill->color_class ?? 'bg-secondary' }}"></span>
+                        @endif
                     </div>
-                    @else
                     <span class="font-bold text-primary text-lg">{{ $skill->name }}</span>
-                    @endif
-                    <span class="material-symbols-outlined text-on-surface-variant/30">{{ $skill->icon }}</span>
                 </div>
-                @empty
-                <p class="text-on-surface-variant/50 p-4">No design & tool skills listed yet.</p>
-                @endforelse
+                @endforeach
+                @endfor
             </div>
         </div>
+
     </div>
 </section>
 <!-- Contact Section -->
@@ -646,19 +909,6 @@
     </div>
 </section>
 
-{{-- Footer --}}
-<footer class="w-full px-6 md:px-10 lg:px-16 py-16 flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto border-t border-outline-variant/30 bg-surface-container-lowest text-on-background">
-    <div class="mb-8 md:mb-0 text-center md:text-left">
-        <h4 class="font-neue text-2xl font-bold text-on-background mb-1">Artha</h4>
-        <p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 Artha. Dibuat dengan semangat belajar.</p>
-    </div>
-    <div class="flex gap-10">
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">LinkedIn</a>
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">GitHub</a>
-        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Dribbble</a>
-    </div>
-</footer>
-
 </div>
 </div>
 
@@ -732,266 +982,11 @@
         <span class="material-symbols-outlined" style="font-size:18px;color:#2f2115;pointer-events:none;">close</span>
     </button>
 </div>
-
-<script>
-(function() {
-    /* ── State ── */
-    var _rect   = null;
-    var _srcEl  = null;
-    var _slide  = 0;
-
-    /* ── Nav button styles ── */
-    var NAV_BTN = 'position:absolute;top:50%;transform:translateY(-50%);z-index:5;'
-               + 'width:40px;height:40px;border-radius:50%;'
-               + 'background:rgba(244,236,216,0.9);border:1px solid rgba(90,60,30,0.2);'
-               + 'box-shadow:0 2px 8px rgba(40,25,10,0.18);'
-               + 'display:flex;align-items:center;justify-content:center;'
-               + 'cursor:pointer;transition:background 0.2s ease;';
-
-    /* ── Project data (from JSON tag) ── */
-    var projectsData = {};
-    try {
-        projectsData = JSON.parse(document.getElementById('projects-json').textContent);
-    } catch(e) {}
-
-    /* ── OPEN ── */
-    window.openFlipModal = function(event, projectId) {
-        var srcEl   = event.currentTarget;
-        var rect    = srcEl.getBoundingClientRect();
-        var project = projectsData[projectId];
-        if (!project) return;
-
-        _srcEl = srcEl;
-        _rect  = rect;
-        _slide = 0;
-
-        var modal    = document.getElementById('pm-modal');
-        var backdrop = document.getElementById('pm-backdrop');
-        var content  = document.getElementById('pm-content');
-        var closeBtn = document.getElementById('pm-close');
-
-        _slide = 0;
-        content.style.opacity = '0';
-        content.innerHTML = '';
-
-        /* 1. Start at card position (FLIP) */
-        modal.style.transition  = 'none';
-        modal.style.top         = rect.top    + 'px';
-        modal.style.left        = rect.left   + 'px';
-        modal.style.width       = rect.width  + 'px';
-        modal.style.height      = rect.height + 'px';
-        modal.style.borderRadius = '20px';
-        modal.style.opacity     = '1';
-        modal.style.pointerEvents = 'auto';
-
-        /* 2. Build image array */
-        var imgs = [];
-        if (project.cover_image) imgs.push(project.cover_image);
-        var raw   = project.images;
-        var extra = Array.isArray(raw) ? raw
-                  : (typeof raw === 'string'
-                      ? (function() { try { return JSON.parse(raw); } catch(e) { return []; } })()
-                      : []);
-        extra.forEach(function(i) { if (i !== project.cover_image) imgs.push(i); });
-
-        /* 3. Build gallery HTML */
-        var galleryHtml = '';
-        if (imgs.length > 0) {
-            var slideHeight = Math.round(window.innerHeight * 0.52);
-            var slides = imgs.map(function(img, i) {
-                return '<div class="pm-slide" data-i="' + i + '" style="height:' + slideHeight + 'px;flex-shrink:0;width:85%;padding:0 8px;box-sizing:border-box;scroll-snap-align:center;">'
-                     + '<div style="width:100%;height:100%;overflow:hidden;border-radius:14px;'
-                     + 'box-shadow:0 10px 32px rgba(40,25,10,0.22);'
-                     + 'border:1px solid rgba(60,40,20,0.08);'
-                     + 'background:rgba(90,74,48,0.05);display:flex;align-items:center;justify-content:center;">'
-                     + '<img src="/storage/' + img + '" alt="Gambar ' + (i+1) + '" loading="' + (i===0?'eager':'lazy') + '" style="width:100%;height:100%;object-fit:cover;display:block;" />'
-                     + '</div></div>';
-            }).join('');
-
-            var navHtml = imgs.length > 1
-                ? '<button type="button" id="pm-gal-prev" style="' + NAV_BTN + 'left:24px;" onclick="pmGalNav(-1)" aria-label="Sebelumnya">'
-                + '<span class="material-symbols-outlined" style="font-size:24px;pointer-events:none;">arrow_back_ios_new</span></button>'
-                + '<button type="button" id="pm-gal-next" style="' + NAV_BTN + 'right:24px;" onclick="pmGalNav(1)" aria-label="Berikutnya">'
-                + '<span class="material-symbols-outlined" style="font-size:24px;pointer-events:none;">arrow_forward_ios</span></button>'
-                + '<div id="pm-gal-counter" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);'
-                + 'background:rgba(47,33,21,0.78);color:#f4ecd8;font-size:11px;font-weight:700;'
-                + 'padding:3px 14px;border-radius:20px;letter-spacing:0.08em;pointer-events:none;z-index:5;">'
-                + '1 / ' + imgs.length + '</div>'
-                : '';
-
-            var trackStyle = imgs.length > 1
-                ? 'padding:0 7.5%;justify-content:flex-start;'
-                : 'padding:0;justify-content:center;';
-
-            galleryHtml = '<div style="position:relative;width:100%;height:' + slideHeight + 'px;border-bottom:1px solid rgba(90,60,30,0.12);overflow:hidden;padding:16px 0;box-sizing:border-box;">'
-                        + '<div id="pm-gal-track" style="display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;'
-                        + 'scroll-behavior:smooth;-ms-overflow-style:none;scrollbar-width:none;box-sizing:border-box;gap:0;' + trackStyle + '">'
-                        + slides
-                        + '</div>' + navHtml + '</div>';
-        }
-
-        /* 4. Build skills tags */
-        var skillsHtml = '';
-        if (project.skills && project.skills.length > 0) {
-            skillsHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">' +
-                project.skills.map(function(s) {
-                    return '<span style="font-size:11px;font-weight:600;padding:4px 10px;background:rgba(90,74,48,0.10);color:#4a3524;border-radius:20px;border:1px solid rgba(90,74,48,0.15)">' + s + '</span>';
-                }).join('') + '</div>';
-        }
-
-        /* 5. Assemble full content */
-        content.innerHTML = galleryHtml +
-            '<div style="padding:28px 32px 36px;">' +
-            '<p style="font-family:monospace;font-size:11px;color:#8b7355;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">' + (project.category || '') + '</p>' +
-            '<h2 style="font-size:clamp(22px,3vw,32px);font-weight:900;color:#2f2115;margin:0 0 12px;line-height:1.1;letter-spacing:-0.02em;">' + project.title + '</h2>' +
-            (project.description ? '<p style="font-size:15px;line-height:1.7;color:#5a4a38;margin:0 0 20px;">' + project.description + '</p>' : '') +
-            skillsHtml +
-            '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;">' +
-            (project.demo_link ? '<a href="' + project.demo_link + '" target="_blank" rel="noopener" class="pm-btn-primary">View Live <span class="material-symbols-outlined" style="font-size:17px;">open_in_new</span></a>' : '') +
-            (project.github_link ? '<a href="' + project.github_link + '" target="_blank" rel="noopener" class="pm-btn-secondary">Source Code <span class="material-symbols-outlined" style="font-size:17px;">code</span></a>' : '') +
-            '</div></div>';
-
-        /* 6. Force reflow then FLIP to center */
-        void modal.offsetWidth;
-
-        var fw = Math.min(window.innerWidth  * 0.96, 1200);
-        var fh = window.innerHeight * 0.94;
-        var ft = (window.innerHeight - fh) / 2;
-        var fl = (window.innerWidth  - fw) / 2;
-
-        modal.style.transition   = 'top 0.65s cubic-bezier(0.22,1,0.36,1),left 0.65s cubic-bezier(0.22,1,0.36,1),width 0.65s cubic-bezier(0.22,1,0.36,1),height 0.65s cubic-bezier(0.22,1,0.36,1),border-radius 0.65s cubic-bezier(0.22,1,0.36,1)';
-        modal.style.top          = ft + 'px';
-        modal.style.left         = fl + 'px';
-        modal.style.width        = fw + 'px';
-        modal.style.height       = fh + 'px';
-        modal.style.borderRadius = '24px';
-
-        backdrop.style.opacity      = '1';
-        backdrop.style.pointerEvents = 'auto';
-        document.body.style.overflow = 'hidden';
-
-        /* Hide navbar */
-        var navbar = document.getElementById('global-navbar');
-        if (navbar) {
-            navbar.style.setProperty('transition', 'opacity 0.3s ease,transform 0.3s ease', 'important');
-            navbar.style.setProperty('opacity', '0', 'important');
-            navbar.style.setProperty('transform', 'translateY(-100%)', 'important');
-            navbar.style.setProperty('pointer-events', 'none', 'important');
-            navbar.style.setProperty('visibility', 'hidden', 'important');
-        }
-
-        setTimeout(function() {
-            content.style.opacity       = '1';
-            closeBtn.style.opacity      = '1';
-            closeBtn.style.pointerEvents = 'auto';
-            var prev = document.getElementById('pm-gal-prev');
-            if (prev) prev.style.opacity = '0.4';
-        }, 380);
-    };
-
-    /* ── GALLERY NAV ── */
-    window.pmGalNav = function(dir) {
-        var track = document.getElementById('pm-gal-track');
-        if (!track) return;
-        var items = track.querySelectorAll('.pm-slide');
-        if (!items.length) return;
-
-        _slide = Math.max(0, Math.min(_slide + dir, items.length - 1));
-        items[_slide].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-
-        var counter = document.getElementById('pm-gal-counter');
-        if (counter) counter.textContent = (_slide + 1) + ' / ' + items.length;
-
-        var prev = document.getElementById('pm-gal-prev');
-        var next = document.getElementById('pm-gal-next');
-        if (prev) prev.style.opacity = _slide === 0 ? '0.4' : '1';
-        if (next) next.style.opacity = _slide === items.length - 1 ? '0.4' : '1';
-    };
-
-    /* ── CLOSE ── */
-    window.pmClose = function() {
-        var modal    = document.getElementById('pm-modal');
-        var backdrop = document.getElementById('pm-backdrop');
-        var content  = document.getElementById('pm-content');
-        var closeBtn = document.getElementById('pm-close');
-
-        closeBtn.style.opacity       = '0';
-        closeBtn.style.pointerEvents = 'none';
-        content.style.opacity        = '0';
-
-        setTimeout(function() {
-            if (_srcEl) _rect = _srcEl.getBoundingClientRect();
-
-            if (_rect) {
-                modal.style.transition   = 'top 0.5s cubic-bezier(0.22,1,0.36,1),left 0.5s cubic-bezier(0.22,1,0.36,1),width 0.5s cubic-bezier(0.22,1,0.36,1),height 0.5s cubic-bezier(0.22,1,0.36,1),border-radius 0.5s cubic-bezier(0.22,1,0.36,1),opacity 0.5s ease';
-                modal.style.top          = _rect.top    + 'px';
-                modal.style.left         = _rect.left   + 'px';
-                modal.style.width        = _rect.width  + 'px';
-                modal.style.height       = _rect.height + 'px';
-                modal.style.borderRadius = '16px';
-            }
-
-            backdrop.style.opacity      = '0';
-            backdrop.style.pointerEvents = 'none';
-
-            /* Restore navbar */
-            var navbar = document.getElementById('global-navbar');
-            if (navbar) {
-                navbar.style.setProperty('opacity', '1', 'important');
-                navbar.style.setProperty('transform', 'translateY(0)', 'important');
-                navbar.style.setProperty('pointer-events', 'auto', 'important');
-                navbar.style.setProperty('visibility', 'visible', 'important');
-            }
-
-            setTimeout(function() {
-                modal.style.opacity      = '0';
-                modal.style.pointerEvents = 'none';
-                document.body.style.overflow = '';
-                setTimeout(function() { content.innerHTML = ''; }, 100);
-            }, 520);
-        }, 100);
-    };
-
-    window.closeFlipModal = window.pmClose;
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') window.pmClose(); });
-})();
-</script>
+@push('scripts')
+    <script src="{{ asset('js/welcome.js') }}"></script>
+@endpush
 
 @push('styles')
-<style>
-    .pm-btn-primary, .pm-btn-secondary {
-        padding: 13px 26px;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 14px;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.25s ease;
-    }
-    .pm-btn-primary {
-        background: linear-gradient(155deg, #4a3524, #2f2115);
-        color: #f4ecd8;
-        box-shadow: 0 8px 20px rgba(30,18,8,0.28);
-    }
-    .pm-btn-primary:hover {
-        background: linear-gradient(155deg, #e8a53d, #d97706);
-        color: #2f2115;
-        transform: translateY(-1px);
-        box-shadow: 0 10px 26px rgba(217,119,6,0.3);
-    }
-    .pm-btn-secondary {
-        background: rgba(90,74,48,0.08);
-        color: #2f2115;
-        border: 1px solid rgba(90,74,48,0.18);
-    }
-    .pm-btn-secondary:hover {
-        background: rgba(217,119,6,0.10);
-        border-color: rgba(217,119,6,0.4);
-        color: #a35d1e;
-        transform: translateY(-1px);
-    }
-</style>
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 @endpush
 @endsection

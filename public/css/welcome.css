@@ -1,0 +1,122 @@
+    .pm-btn-primary, .pm-btn-secondary {
+        padding: 13px 26px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.25s ease;
+    }
+    .pm-btn-primary {
+        background: linear-gradient(155deg, #4a3524, #2f2115);
+        color: #f4ecd8;
+        box-shadow: 0 8px 20px rgba(30,18,8,0.28);
+    }
+    .pm-btn-primary:hover {
+        background: linear-gradient(155deg, #e8a53d, #d97706);
+        color: #2f2115;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 26px rgba(217,119,6,0.3);
+    }
+    .pm-btn-secondary {
+        background: rgba(90,74,48,0.08);
+        color: #2f2115;
+        border: 1px solid rgba(90,74,48,0.18);
+    }
+    .pm-btn-secondary:hover {
+        background: rgba(217,119,6,0.10);
+        border-color: rgba(217,119,6,0.4);
+        color: #a35d1e;
+        transform: translateY(-1px);
+    }
+
+    /* ── Mini terminal "ls -la" — pengganti skill tags ── */
+.about-terminal{
+    max-width: 420px;
+    transform: rotate(-0.5deg);
+}
+.about-terminal-body{
+    padding: 16px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: #5c5760;
+    line-height: 1.9;
+}
+.about-terminal-line{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 14px;
+}
+.about-terminal-icon{
+    color: #d97706;
+    opacity: 0.75;
+    display: inline-flex;
+}
+.about-terminal-key{
+    color: #00668a;
+    font-weight: 600;
+    min-width: 92px;
+}
+.about-terminal-val{
+    color: #5c5760;
+    opacity: 0.85;
+}
+
+/* ── Marquee Animation ── */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+    display: flex;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.marquee-content {
+    display: flex;
+    animation: marquee-scroll 55s linear infinite;
+    gap: 1.5rem;
+    padding-right: 1.5rem;
+}
+.marquee-content.reverse {
+    animation-direction: reverse;
+}
+.marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.skill-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    min-width: max-content;
+}
+.skill-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+.skill-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.skill-icon img, .skill-icon svg {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}

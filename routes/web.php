@@ -8,7 +8,6 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', [PageController::class, 'welcome'])->name('welcome');
-Route::get('/projects', [PageController::class, 'projects'])->name('projects.index');
 Route::get('/project/{project}', [PageController::class, 'projectDetail'])->name('project.detail');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
 

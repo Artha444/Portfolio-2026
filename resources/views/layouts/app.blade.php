@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 
-<html lang="en"><head>
+<html lang="en">
+    <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Artha | Pelajar SMK & Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Beau+Rivage&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
     tailwind.config = {
@@ -44,6 +48,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"/>
 
     <style>
+        /* 
+            [SARAN] Pindahkan semua CSS di bawah ini ke file terpisah seperti 'resources/css/app.css' 
+            dan gunakan Vite untuk memprosesnya. Ini akan meningkatkan performa dan keterbacaan.
+        */
         /* Sembunyikan scrollbar untuk pengalaman UI yang lebih bersih (seperti aplikasi) */
         ::-webkit-scrollbar {
             display: none; /* Chrome, Safari, Opera */
@@ -770,54 +778,19 @@ html { position: relative; min-height: 100%; }
     mix-blend-mode: normal;
 }
 .cursor-ring.is-hover {
-    width: 96px;
-    height: 96px;
-    border-color: rgba(0,102,138,0.15);
-    border-width: 1px;
-    background: #ffffff;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08),
-                0 2px 8px rgba(0,0,0,0.04),
-                inset 0 1px 0 rgba(255,255,255,0.8);
+    width: 80px;
+    height: 80px;
+    border-color: rgba(0,102,138,0.3);
+    border-width: 1.5px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
 }
 .cursor-ring.is-hidden {
     opacity: 0;
     transition: opacity 0.3s ease;
 }
-.cursor-label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1px;
-    opacity: 0;
-    transform: translateY(12px) scale(0.6);
-    transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-    will-change: transform, opacity;
-}
-.cursor-ring.is-hover .cursor-label {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-.cursor-icon {
-    font-size: 22px !important;
-    color: #00668a;
-    font-variation-settings: 'FILL' 0, 'wght' 300;
-    line-height: 1;
-    transition: transform 0.3s ease;
-}
-.cursor-ring.is-hover .cursor-icon {
-    transform: scale(1.1);
-}
-.cursor-text {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #1a1a2e;
-    line-height: 1;
-    white-space: nowrap;
-}
+
 
 /* Hide default cursor on interactive elements */
 body:not(.cursor-disabled) a,
@@ -836,6 +809,9 @@ body:not(.cursor-disabled) .project-card {
     .scroll-indicator { display: none; }
 }
 </style>
+
+    {{-- [SARAN] Ganti semua tag <style> dan <link> manual dengan Vite --}}
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     @stack('styles')
 </head>
@@ -934,10 +910,6 @@ body:not(.cursor-disabled) .project-card {
 <!-- Custom Cursor Elements -->
 
 <div class="cursor-ring">
-    <span class="cursor-label">
-        <span class="cursor-icon material-symbols-outlined">touch_app</span>
-        <span class="cursor-text">Buka</span>
-    </span>
 </div>
 
 <!-- Navigation Shell -->

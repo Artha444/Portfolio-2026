@@ -25,18 +25,26 @@
             @error('name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
         </div>
 
+
+
         <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2" for="type">Skill Type</label>
+            <label class="block text-sm font-semibold text-slate-700 mb-2" for="row_position">Row Position</label>
             <div class="relative">
-                <select class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all sm:text-sm appearance-none" id="type" name="type" required>
-                    <option value="development" {{ old('type', $skill->type) == 'development' ? 'selected' : '' }}>Development</option>
-                    <option value="design_tool" {{ old('type', $skill->type) == 'design_tool' ? 'selected' : '' }}>Design Tool</option>
+                <select class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all sm:text-sm appearance-none" id="row_position" name="row_position" required>
+                    <option value="top" {{ old('row_position', $skill->row_position) == 'top' ? 'selected' : '' }}>Top Row</option>
+                    <option value="bottom" {{ old('row_position', $skill->row_position) == 'bottom' ? 'selected' : '' }}>Bottom Row</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
                     <span class="material-symbols-outlined text-[20px]">expand_more</span>
                 </div>
             </div>
-            @error('type') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+            @error('row_position') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2" for="icon">Icon / SVG / Image Tag (Optional)</label>
+            <textarea class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all sm:text-sm" id="icon" name="icon" rows="4" placeholder="Paste <img src='...'> or <svg> code here">{{ old('icon', $skill->icon) }}</textarea>
+            @error('icon') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
         </div>
 
         <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100 mt-6">

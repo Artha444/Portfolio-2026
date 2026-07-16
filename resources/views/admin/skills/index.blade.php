@@ -14,6 +14,17 @@
     </a>
 </div>
 
+<div class="mb-6 flex gap-4">
+    <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex-1">
+        <div class="text-sm text-indigo-600 font-semibold mb-1">Top Row Skills</div>
+        <div class="text-2xl font-bold text-indigo-900">{{ $topCount }}</div>
+    </div>
+    <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 flex-1">
+        <div class="text-sm text-emerald-600 font-semibold mb-1">Bottom Row Skills</div>
+        <div class="text-2xl font-bold text-emerald-900">{{ $bottomCount }}</div>
+    </div>
+</div>
+
 <div class="bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 rounded-2xl overflow-hidden">
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
@@ -21,7 +32,7 @@
                 <tr class="bg-slate-50/50 border-b border-slate-100 text-xs uppercase tracking-wider text-slate-500 font-semibold">
                     <th class="py-4 px-6">ID</th>
                     <th class="py-4 px-6">Skill Name</th>
-                    <th class="py-4 px-6">Type</th>
+                    <th class="py-4 px-6">Position</th>
                     <th class="py-4 px-6 text-right">Actions</th>
                 </tr>
             </thead>
@@ -37,10 +48,11 @@
                             {{ $skill->name }}
                         </div>
                     </td>
+
                     <td class="py-4 px-6">
                         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase 
-                            {{ $skill->type == 'development' ? 'bg-indigo-50 text-indigo-600' : 'bg-emerald-50 text-emerald-600' }}">
-                            {{ ucfirst(str_replace('_', ' ', $skill->type)) }}
+                            {{ $skill->row_position == 'top' ? 'bg-indigo-50 text-indigo-600' : 'bg-emerald-50 text-emerald-600' }}">
+                            {{ $skill->row_position == 'top' ? 'Top Row' : 'Bottom Row' }}
                         </span>
                     </td>
                     <td class="py-4 px-6">

@@ -26,6 +26,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        if (Project::count() >= 5) {
+            return redirect()->route('admin.projects.index')->with('error', 'Maksimal 5 projek yang diperbolehkan.');
+        }
         return view('admin.projects.create');
     }
 
@@ -34,6 +37,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        if (Project::count() >= 5) {
+            return redirect()->route('admin.projects.index')->with('error', 'Maksimal 5 projek yang diperbolehkan.');
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:255',

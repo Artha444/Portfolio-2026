@@ -11,16 +11,10 @@ class PageController extends Controller
     public function welcome()
     {
         $projects = Project::with('skills')->get();
-        $devSkills = Skill::where('type', 'development')->get();
-        $toolSkills = Skill::where('type', 'design_tool')->get();
+        $topSkills = Skill::where('row_position', 'top')->get();
+        $bottomSkills = Skill::where('row_position', 'bottom')->get();
 
-        return view('welcome', compact('projects', 'devSkills', 'toolSkills'));
-    }
-
-    public function projects()
-    {
-        $projects = Project::with('skills')->get();
-        return view('projects', compact('projects'));
+        return view('welcome', compact('projects', 'topSkills', 'bottomSkills'));
     }
 
     public function projectDetail($id)
